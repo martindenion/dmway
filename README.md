@@ -9,4 +9,4 @@ This application includes:
 - the creation of sensors on Thingsboard
 - the provision of data on Thingsboard
 
-This approach is a direct alternative to Thingsboard Gateway, offering a more generic vision.
+This approach is a direct alternative to Thingsboard Gateway, offering a more generic view by providing dynamic mapping
