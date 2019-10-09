@@ -20,7 +20,7 @@ class Verification:
         return raw_dict["ts"]
 
     def _get_keys(self, raw_json):
-        """Méthode qui retourne une liste des clés de la trame JSON"""
+        """Méthode qui retourne une liste des key de la trame JSON"""
         raw_dict = self.json_to_dict(raw_json)
         keys_list = []
         for cle in raw_dict.keys():
