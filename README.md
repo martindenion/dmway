@@ -1,4 +1,4 @@
-# mdgateway
+# dmway
 
 The objective of this project is to develop an application that links a network of sensors and Thingsboard.
 This application includes:
