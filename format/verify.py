@@ -38,21 +38,27 @@ class Verification:
     def verify_keys(self, raw_json):
         """"Méthode qui vérifie la validité des keys de la trame JSON"""
         keys_list = self._get_keys(raw_json)
-        model_keys_list = ['ts', 'temperature', 'humidity', 'pressure', 'luminosity', 'sound']
-        for key in keys_list:
-            print('key : {}'.format(key))
-            if key in model_keys_list:
-                self.success_keys = True
-            else:
-                self.success_keys = False
-                break
+        model_keys_list = ['name', 'type', 'ts', 'temperature', 'humidity', 'pressure', 'luminosity', 'sound']
+        if 'name' in keys_list and 'type' in keys_list:
+            for key in keys_list:
+                print('key : {}'.format(key))
+                if key in model_keys_list:
+                    self.success_keys = True
+                else:
+                    self.success_keys = False
+                    break
+        else:
+            self.success_keys = False
         return self.success_keys
 
     def verify_values(self, raw_json):
         """Méthode qui vérifie la validité des values de la trame JSON"""
+        raw_dict = self.json_to_dict(raw_json)
         values_list = self._get_values(raw_json)
-        for value in values_list:
-            if isinstance(value, int) or isinstance(value, float):
+        for key, value in raw_dict.items():
+            if (key == 'name' or key == 'type') and isinstance(value, str):
+                self.success_values = True
+            elif isinstance(value, int) or isinstance(value, float):
                 self.success_values = True
             else:
                 self.success_values = False
