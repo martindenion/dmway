@@ -1,5 +1,7 @@
 # dmway
 
+d for dynamic, m for mapping and way from gateway.
+
 The objective of this project is to develop an application that links a network of sensors and Thingsboard.
 This application includes:
 - checking the format of the data received by the sensors
