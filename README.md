@@ -1,11 +1,11 @@
 # dmway
 
-<img src="./dmway.png?raw=true" width="200" height="200">
+<img src="./img/dmway.png?raw=true" width="200" height="200">
 
 d for dynamic, m for mapping and way from gateway.
 
 The objective of this project is to develop an application that links a network of sensors and Thingsboard.
-This application includes:
+This application includes :
 - checking the format of the data received by the sensors
 - data persistence
 - the creation of sensors on Thingsboard
