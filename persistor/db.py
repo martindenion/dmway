@@ -37,8 +37,6 @@ class Database:
         except Error as e:
             print(e)
 
-        return self.conn_state
-
     def create_table(self):
         """Création des tables gateway ou devices en fonction de la valeur de sql_table"""
         try:

@@ -6,7 +6,7 @@ import serial
 import sys
 import paho.mqtt.client as mqtt
 import json
-
+#send data to thingsboard
 THINGSBOARD_HOST = 'iotplatform.int.cetic.be'
 ACCESS_TOKEN = 'P1Wx6MO4SAgAr3nnqqYV'
 
