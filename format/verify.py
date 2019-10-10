@@ -3,8 +3,8 @@ from functools import reduce
 
 
 class Verification:
-    """Cette classe consiste en la vérification du format JSON
-    des données reçues par les différents capteurs"""
+    """Cette classe comporte les méthodes nécessaire à la vérification
+    du format JSON des données reçues par les différents capteurs"""
 
     def __init__(self):
         """Par défaut, la vérification du format est un échec"""
