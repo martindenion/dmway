@@ -1,5 +1,7 @@
 import sqlite3
+import json
 from sqlite3 import Error
+from format.format import *
 
 class Database:
     """Cette classe comporte les méthodes nécessaire au stockage des données
@@ -18,7 +20,7 @@ class Database:
                                         humidity real,
                                         pressure real,
                                         luminosity real,
-                                        sound
+                                        sound real
                                     ); """
         self.sql_create_gateway_table = """CREATE TABLE IF NOT EXISTS gateway (
                                     id integer PRIMARY KEY,
@@ -45,3 +47,27 @@ class Database:
             c.execute(self.sql_create_gateway_table)
         except Error as e:
             print(e)
+"""""
+    def json_keys_to_query(self, raw_json):
+        #Méthode qui récupère les clés de la trame JSON et qui retourne une liste de clés
+        return Verification.get_keys(raw_json)
+
+    def json_values_to_list(self, raw_json):
+
+       return Verification.get_values(raw_json)
+"""""
+
+    def number_question_marks(self, query):
+        l = []
+        for k in range (0, len(query)):
+            l.append('?')
+        return l
+
+    def insert_device(self, raw_json):
+        query = ','.join(Verification.get_keys(raw_json))
+        question_marks = ','.join(number_question_marks(query))
+        data = Verification.get_values(raw_json)
+
+
+
+

@@ -1,6 +1,4 @@
 import json
-from functools import reduce
-
 
 class Verification:
     """Cette classe comporte les méthodes nécessaire à la vérification
@@ -19,7 +17,7 @@ class Verification:
         raw_dict = self.json_to_dict(raw_json)
         return raw_dict["ts"]
 
-    def _get_keys(self, raw_json):
+    def get_keys(self, raw_json):
         """Méthode qui retourne une liste des key de la trame JSON"""
         raw_dict = self.json_to_dict(raw_json)
         keys_list = []
@@ -27,7 +25,7 @@ class Verification:
             keys_list.append(cle)
         return keys_list
 
-    def _get_values(self, raw_json):
+    def get_values(self, raw_json):
         """Méthode qui retourne une liste des valeurs de la trame JSON"""
         raw_dict = self.json_to_dict(raw_json)
         values_list = []
