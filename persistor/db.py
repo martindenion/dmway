@@ -3,6 +3,13 @@ import json
 from sqlite3 import Error
 from format.format import *
 
+
+def number_question_marks(query):
+    marks_list = []
+    for k in range(0, len(query)):
+        marks_list.append('?')
+    return marks_list
+
 class Database:
     """Cette classe comporte les méthodes nécessaire au stockage des données
     sur une base de données SQLite"""
@@ -47,27 +54,18 @@ class Database:
             c.execute(self.sql_create_gateway_table)
         except Error as e:
             print(e)
-"""""
-    def json_keys_to_query(self, raw_json):
-        #Méthode qui récupère les clés de la trame JSON et qui retourne une liste de clés
-        return Verification.get_keys(raw_json)
-
-    def json_values_to_list(self, raw_json):
-
-       return Verification.get_values(raw_json)
-"""""
-
-    def number_question_marks(self, query):
-        l = []
-        for k in range (0, len(query)):
-            l.append('?')
-        return l
 
     def insert_device(self, raw_json):
-        query = ','.join(Verification.get_keys(raw_json))
-        question_marks = ','.join(number_question_marks(query))
-        data = Verification.get_values(raw_json)
-
-
-
+        verif = Verification()
+        query = verif.get_keys(raw_json)
+        question_marks = number_question_marks(query)
+        data = verif.get_values(raw_json)
+        #data = ("John", 30, "Nantes")
+        sql = ' INSERT INTO devices(' + ','.join(query) + ') VALUES (' + ','.join(question_marks) + ') '
+        try:
+            cur = self.conn_state.cursor()
+            cur.execute(sql, data)
+            print("{} insered in SQLite database".format(raw_json))
+        except Error as e:
+            print(e)
 

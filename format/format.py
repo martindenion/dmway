@@ -1,5 +1,7 @@
 import json
 
+
+
 class Verification:
     """Cette classe comporte les méthodes nécessaire à la vérification
     du format JSON des données reçues par les différents capteurs"""
@@ -35,7 +37,7 @@ class Verification:
 
     def verify_keys(self, raw_json):
         """"Méthode qui vérifie la validité des keys de la trame JSON"""
-        keys_list = self._get_keys(raw_json)
+        keys_list = self.get_keys(raw_json)
         model_keys_list = ['name', 'type', 'ts', 'temperature', 'humidity', 'pressure', 'luminosity', 'sound']
         if 'name' in keys_list and 'type' in keys_list:
             for key in keys_list:
