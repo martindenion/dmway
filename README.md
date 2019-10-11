@@ -1,4 +1,4 @@
-<img src="./img/dmway2.png?raw=true" width="200" height="100">
+<img src="./img/dmway2.png?raw=true" width="177" height="106">
 
 d for dynamic, m for mapping and way from gateway.
 
