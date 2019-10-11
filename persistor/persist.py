@@ -17,7 +17,7 @@ class Database:
     def __init__(self):
         """Identifie l'emplacement physique de la DB SQLite"""
         self.db_path = r"C:\Users\Martin\PycharmProjects\mdgateway\persistor\python_sqlite.db"  #but :memory: in Raspberry Pi
-        self.conn_state = None
+        self.sqlite_connection = None
         self.sql_create_devices_table = """ CREATE TABLE IF NOT EXISTS devices (
                                         id integer PRIMARY KEY,
                                         name text NOT NULL,
@@ -41,7 +41,7 @@ class Database:
     def create_connection(self):
         """Création de la connexion à la base de données SQLite"""
         try:
-            self.conn_state = sqlite3.connect(self.db_path)
+            self.sqlite_connection = sqlite3.connect(self.db_path)
             print(sqlite3.version)
         except Error as e:
             print(e)
@@ -49,23 +49,43 @@ class Database:
     def create_table(self):
         """Création des tables gateway ou devices en fonction de la valeur de sql_table"""
         try:
-            c = self.conn_state.cursor()
-            c.execute(self.sql_create_devices_table)
-            c.execute(self.sql_create_gateway_table)
+            cursor = self.sqlite_connection.cursor()
+            cursor.execute(self.sql_create_devices_table)
+            cursor.execute(self.sql_create_gateway_table)
         except Error as e:
             print(e)
 
     def insert_device(self, raw_json):
+        """Enregistrement du device dans la table devices"""
         verif = Verification()
         query = verif.get_keys(raw_json)
         question_marks = number_question_marks(query)
         data = verif.get_values(raw_json)
         sql = ' INSERT INTO devices(' + ','.join(query) + ') VALUES (' + ','.join(question_marks) + ') '
         try:
-            cur = self.conn_state.cursor()
-            cur.execute(sql, data)
+            cursor = self.sqlite_connection.cursor()
+            cursor.execute(sql, data)
             print("{} insered in SQLite database".format(raw_json))
-            self.conn_state.commit()
-        except Error as e:
-            print(e)
+            self.sqlite_connection.commit()
+        except sqlite3.Error as error:
+            print("Failed to insert device in sqlite table", error)
+        finally:
+            if self.sqlite_connection:
+                self.sqlite_connection.close()
+                print("the sqlite connection is closed")
+
+    def delete_device(self, id):
+        """Suppression d'un device de la table devices"""
+        try:
+            sql_delete_query = 'DELETE FROM devices WHERE id = {}'.format(id)
+            cursor = self.sqlite_connection.cursor()
+            cursor.execute(sql_delete_query)
+            self.sqlite_connection.commit()
+        except sqlite3.Error as error:
+            print("Failed to delete device from sqlite table", error)
+        finally:
+            if self.sqlite_connection:
+                self.sqlite_connection.close()
+                print("the sqlite connection is closed")
+
 

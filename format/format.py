@@ -54,7 +54,7 @@ class Verification:
     def verify_values(self, raw_json):
         """Méthode qui vérifie la validité des values de la trame JSON"""
         raw_dict = self.json_to_dict(raw_json)
-        values_list = self._get_values(raw_json)
+        values_list = self.get_values(raw_json)
         for key, value in raw_dict.items():
             if (key == 'name' or key == 'type') and isinstance(value, str):
                 self.success_values = True
