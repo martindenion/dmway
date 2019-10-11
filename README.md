@@ -1,4 +1,6 @@
-<img src="./img/dmway2.png?raw=true" width="177" height="106">
+#dmway
+
+<img src="./img/dmway2.png?raw=true" width="265" height="159">
 
 d for dynamic, m for mapping and way from gateway.
 
