@@ -1,5 +1,3 @@
-# dmway
-
 <img src="./img/dmway2.png?raw=true">
 
 d for dynamic, m for mapping and way from gateway.
