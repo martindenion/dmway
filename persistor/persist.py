@@ -60,12 +60,12 @@ class Database:
         query = verif.get_keys(raw_json)
         question_marks = number_question_marks(query)
         data = verif.get_values(raw_json)
-        #data = ("John", 30, "Nantes")
         sql = ' INSERT INTO devices(' + ','.join(query) + ') VALUES (' + ','.join(question_marks) + ') '
         try:
             cur = self.conn_state.cursor()
             cur.execute(sql, data)
             print("{} insered in SQLite database".format(raw_json))
+            self.conn_state.commit()
         except Error as e:
             print(e)
 
