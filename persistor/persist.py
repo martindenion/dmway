@@ -88,6 +88,22 @@ class Database:
                 self.sqlite_connection.close()
                 print("the sqlite connection is closed")
 
-
-
+    def select_device(self, id):
+        """Sélectionne les données d'un device enregistré dans la base de données et renvoie une liste brute
+        des données"""
+        try:
+            sql_select_query = 'SELECT * FROM devices WHERE id = {}'.format(id)
+            cursor = self.sqlite_connection.cursor()
+            cursor.execute(sql_select_query)
+            self.sqlite_connection.commit()
+            rows = cursor.fetchall()
+            for row in rows:
+                print(row[1])
+        except sqlite3.Error as error:
+            print("Failed to select device from sqlite table", error)
+        finally:
+            if self.sqlite_connection:
+                self.sqlite_connection.close()
+                print("the sqlite connection is closed")
+        return rows
 
