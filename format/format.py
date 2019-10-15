@@ -1,7 +1,5 @@
 import json
 
-
-
 class Verification:
     """Cette classe comporte les méthodes nécessaire à la vérification
     du format JSON des données reçues par les différents capteurs"""

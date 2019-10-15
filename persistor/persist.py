@@ -98,12 +98,14 @@ class Database:
             self.sqlite_connection.commit()
             rows = cursor.fetchall()
             for row in rows:
-                print(row[1])
+                print(row)
         except sqlite3.Error as error:
             print("Failed to select device from sqlite table", error)
         finally:
             if self.sqlite_connection:
                 self.sqlite_connection.close()
                 print("the sqlite connection is closed")
-        return rows
+        return rows[0]
+
+
 

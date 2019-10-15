@@ -54,17 +54,35 @@ class Publish:
     # else:
     #   raw_dict['values'][keys_list[i]] = value
 
-    def sqlite_to_send(self, id):
+    def sqlite_to_connect(self, id):
         select = Database()
         select.create_connection()
         raw_dict = {}
-        keys_list = ['name', 'type', 'ts', 'temperature', 'humidity', 'pressure', 'luminosity', 'sound']
+        keys_list = ['name', 'type']
         raw_json = select.select_device(id)
         i = 0
+        j = 0
         for value in raw_json:
-            if value is not None:
-                if i < 4:
-                    raw_dict[keys_list[i]] = value[i+1]
-        return raw_dict
+            if value is not None and 0 < i < 3:
+                raw_dict[keys_list[j]] = value
+                j += 1
+            i += 1
+        return json.dumps(raw_dict)
 
+    def sqlite_to_telemetry(self, id):
+        select = Database()
+        select.create_connection()
+        raw_dict = {'ts': 1483228801000, 'values' : {}}
+        keys_list = ['temperature', 'humidity', 'pressure', 'luminosity', 'sound']
+        raw_json = select.select_device(id)
+        raw_dict['ts'] = raw_json[3]
+        i = 0
+        j = 0
+        for value in raw_json:
+            if value is not None and i > 3:
+                raw_dict['values'][keys_list[j]] = value
+                print(value)
+                j += 1
+            i += 1
+        return '{\"' + raw_json[1] + "\": [" + json.dumps(raw_dict) + ']' + '}'
 
