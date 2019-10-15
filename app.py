@@ -2,9 +2,9 @@ from format.format import Verification
 from persistor.persist import Database
 from publish.publish import Publish
 
-json1 = '{"name":"device31","type":"capteur1","ts":1483228800000,"temperature":30,"humidity":50,"pressure":1015,' \
+json2 = '{"name":"device31","type":"capteur1","ts":1483228800000,"temperature":30,"humidity":50,"pressure":1015,' \
         '"luminosity":10000,"sound":55}'
-json2 = '{"name":"device32","type":"capteur2","ts":1483228800000,"temperature":30,"humidity":50,"pressure":1015,' \
+json1 = '{"name":"device32","type":"capteur2","ts":1483228800000,"temperature":30,"humidity":50,"pressure":1015,' \
         '"luminosity":10000,"sound":55}'
 json3 = '{"name":"device33","type":"capteur3","ts":1483228800000,"temperature":30,"humidity":50,"pressure":1015,' \
         '"luminosity":10000,"sound":55}'

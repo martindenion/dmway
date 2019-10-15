@@ -21,7 +21,7 @@ class Publish:
         client.username_pw_set(floor_chosen)
         client.connect(self.thingsboard_host, 1883, 60)
         client.loop_start()
-        raw_json = self.sqlite_to_connect(6)
+        raw_json = self.sqlite_to_connect(1)
         try:
             client.publish('v1/gateway/connect', raw_json, 1)
         except KeyboardInterrupt:
@@ -46,7 +46,7 @@ class Publish:
         client.username_pw_set(floor_chosen)
         client.connect(self.thingsboard_host, 1883, 60)
         client.loop_start()
-        raw_json = self.sqlite_to_telemetry(6)
+        raw_json = self.sqlite_to_telemetry(1)
         try:
             client.publish('v1/gateway/telemetry', raw_json, 1)
         except KeyboardInterrupt:
@@ -89,3 +89,6 @@ class Publish:
                 j += 1
             i += 1
         return '{\"' + raw_json[1] + '\": [' + json.dumps(raw_dict) + ']' + '}'
+
+
+

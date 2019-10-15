@@ -1,5 +1,6 @@
 import json
 
+
 class Verification:
     """Cette classe comporte les méthodes nécessaire à la vérification
     du format JSON des données reçues par les différents capteurs"""
@@ -13,9 +14,9 @@ class Verification:
         """Méthode qui permet de convertir un message JSON en dictionnaire python"""
         return json.loads(raw_json)
 
-    def _get_ts(self, raw_json):
+    def get_key(self, raw_json, key):
         raw_dict = self.json_to_dict(raw_json)
-        return raw_dict["ts"]
+        return raw_dict["{}".format(key)]
 
     def get_keys(self, raw_json):
         """Méthode qui retourne une liste des key de la trame JSON"""
