@@ -5,13 +5,14 @@ import paho.mqtt.client as mqtt
 import json
 from persistor.persist import *
 
+
 class Publish:
 
     def __init__(self):
         self.thingsboard_host = 'iotplatform.int.cetic.be'
         self.gnd_floor_gtw_access_token = 'untoken'
         self.fst_floor_gtw_access_token = 'cmrtWotOUSysmsydspo4'
-        self.snd_floot_gtw_access_token = 'unautretoken'
+        self.snd_floor_gtw_access_token = 'unautretoken'
 
     def create_device(self, raw_json, floor):
         """Cette méthode permet de créer un device sur Thingsboard en fonction de la gateway indiquée"""
@@ -20,6 +21,7 @@ class Publish:
         client.username_pw_set(floor_chosen)
         client.connect(self.thingsboard_host, 1883, 60)
         client.loop_start()
+        raw_json = self.sqlite_to_connect(6)
         try:
             client.publish('v1/gateway/connect', raw_json, 1)
         except KeyboardInterrupt:
@@ -32,7 +34,7 @@ class Publish:
         switcher = {
             0: self.gnd_floor_gtw_access_token,
             1: self.fst_floor_gtw_access_token,
-            2: self.snd_floot_gtw_access_token,
+            2: self.snd_floor_gtw_access_token,
         }
         return switcher.get(floor, self.gnd_floor_gtw_access_token)
 
@@ -44,6 +46,7 @@ class Publish:
         client.username_pw_set(floor_chosen)
         client.connect(self.thingsboard_host, 1883, 60)
         client.loop_start()
+        raw_json = self.sqlite_to_telemetry(6)
         try:
             client.publish('v1/gateway/telemetry', raw_json, 1)
         except KeyboardInterrupt:
@@ -51,10 +54,9 @@ class Publish:
         client.loop_stop()
         client.disconnect()
 
-    # else:
-    #   raw_dict['values'][keys_list[i]] = value
-
     def sqlite_to_connect(self, id):
+        """Cette méthode permet d'extraire les données d'un device de la base de données SQLite et
+        d'ensuite mettre ces données au format de l'API Thingsboard pour la création d'un device"""
         select = Database()
         select.create_connection()
         raw_dict = {}
@@ -70,9 +72,12 @@ class Publish:
         return json.dumps(raw_dict)
 
     def sqlite_to_telemetry(self, id):
+        """Cette méthode permet d'extraire les données d'un device de la base de données SQLite et
+        d'ensuite mettre ces données au format de l'API Thingsboard pour l'envoi de données mesurées par
+        un device"""
         select = Database()
         select.create_connection()
-        raw_dict = {'ts': 1483228801000, 'values' : {}}
+        raw_dict = {'ts': None, 'values': {}}
         keys_list = ['temperature', 'humidity', 'pressure', 'luminosity', 'sound']
         raw_json = select.select_device(id)
         raw_dict['ts'] = raw_json[3]
@@ -81,8 +86,6 @@ class Publish:
         for value in raw_json:
             if value is not None and i > 3:
                 raw_dict['values'][keys_list[j]] = value
-                print(value)
                 j += 1
             i += 1
-        return '{\"' + raw_json[1] + "\": [" + json.dumps(raw_dict) + ']' + '}'
-
+        return '{\"' + raw_json[1] + '\": [' + json.dumps(raw_dict) + ']' + '}'
