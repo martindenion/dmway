@@ -38,6 +38,21 @@ class Publish:
         client.loop_stop()
         client.disconnect()
 
+    def create_devices(self):
+        client = mqtt.Client()
+        client.username_pw_set(self.fst_floor_gtw_access_token)
+        client.connect(self.thingsboard_host, 1883, 60)
+        raw_list = self.sqlite_to_connect_all_devices()
+        client.loop_start()
+        for dic in raw_list:
+            try:
+                client.publish('v1/gateway/connect', dic, 1)
+                print(dic)
+            except KeyboardInterrupt:
+                pass
+        client.loop_stop()
+        client.disconnect()
+
     def which_floor(self, floor):
         """Cette méthode renvoie le jeton d'accès correspondant à la passerelle de l'étage choisi"""
         switcher = {
@@ -69,6 +84,21 @@ class Publish:
         client.loop_stop()
         client.disconnect()
 
+    def send_telemetry_all_devices(self):
+        client = mqtt.Client()
+        client.username_pw_set(self.fst_floor_gtw_access_token)
+        client.connect(self.thingsboard_host, 1883, 60)
+        raw_list = self.sqlite_to_telemetry_all_devices()
+        client.loop_start()
+        for dic in raw_list:
+            try:
+                client.publish('v1/gateway/telemetry', dic, 1)
+                print(dic)
+            except KeyboardInterrupt:
+                pass
+        client.loop_stop()
+        client.disconnect()
+
     def sqlite_to_connect(self, addr):
         """
         Method that selects a line from the devices table and returns this data as a string respecting the
@@ -79,7 +109,7 @@ class Publish:
         select = Database()
         select.create_connection()
         raw_dict = {}
-        keys_list = ['name', 'type']
+        keys_list = ['device', 'type']
         raw_json = select.select_device(addr)
         i = 0
         j = 0
@@ -94,7 +124,7 @@ class Publish:
         select = Database()
         select.create_connection()
         raw_dict = {}
-        keys_list = ['name', 'type']
+        keys_list = ['device', 'type']
         l = []
         raw_json = select.select_all_devices()
         i = 0
@@ -131,3 +161,29 @@ class Publish:
                 j += 1
             i += 1
         return '{\"' + raw_json[2] + '\": [' + json.dumps(raw_dict) + ']' + '}'
+
+    def sqlite_to_telemetry_all_devices(self):
+        select = Database()
+        select.create_connection()
+        raw_dict = {'ts': None, 'values': {}}
+        keys_list = ['temperature', 'humidity', 'pressure', 'luminosity', 'sound']
+        tuples_list = select.select_all_devices()
+        i = 0
+        j = 0
+        l = []
+        name = ""
+        for tuples in tuples_list:
+            for value in tuples:
+                if value is not None:
+                    if i == 2:
+                        name = value
+                    elif i == 4:
+                        raw_dict['ts'] = value
+                    elif i > 4:
+                        raw_dict['values'][keys_list[j]] = value
+                        j += 1
+                i += 1
+            l.append('{\"' + name + '\": [' +json.dumps(raw_dict) + ']' + '}')
+            i = 0
+            j = 0
+        return l

@@ -1,34 +1,49 @@
 from format.format import Verification
 from persistor.persist import Database
 from publish.publish import Publish
+#from subscribe.subscribe import Subscribe
 
 json2 = '{"name":"device31","type":"capteur1","ts":1483228800000,"temperature":30,"humidity":50,"pressure":1015,' \
         '"luminosity":10000,"sound":55}'
 json1 = '{"name":"device32","type":"capteur2","ts":1483228800000,"temperature":30,"humidity":50,"pressure":1015,' \
         '"luminosity":10000,"sound":55}'
-json3 = '{"name":"device33","type":"capteur3","ts":1483228800000,"temperature":30,"humidity":50,"pressure":1015,' \
+json3 = '{"addr":"uneadresse","name":"device50","type":"capteur3","ts":1483228800000,"temperature":30,"humidity":50,' \
+        '"pressure":1015,' \
         '"luminosity":10000,"sound":55}'
 
 def main_app():
     verif = Verification()
     data = Database()
+    #sub = Subscribe()
     data.create_connection()
     data.create_table()
     pub = Publish()
     flag_for_pub = False
+    raw_json_sent = ""
+    nb_devices = 0
     while True:
-        if verif.verify_keys(json1):
-            if verif.verify_values(json1):
-                data.insert_device(json1)
-                flag_for_pub = True
+        # Reading serial port
+        raw_json = json3
+        # Comparing previous and current raw JSON to not send several times the same frame
+        if raw_json != raw_json_sent:
+            raw_json_sent = raw_json
+            #raw_json_sent = verif.set_ts(raw_json_sent)
+            # Verifying the format of the JSON frame
+            if verif.verify_keys(raw_json_sent):
+                if verif.verify_values(raw_json_sent):
+                    # Saving JSON frame in the SQLite database
+                    data.insert_device(raw_json_sent)
+                    nb_devices += 1
+                else:
+                    print("Error format from device : wrong value(s)")
             else:
-                print("Error format from device : wrong value(s)")
-        else:
-            print("Error format from device : wrong key(s)")
-        if flag_for_pub:
-            data.create_connection()
-            pub.create_device(json1, 1)
-            pub.send_telemetry(json1, 1)
+                print("Error format from device : wrong key(s)")
+            if nb_devices > 0:
+                data.create_connection()
+                pub.create_devices()
+                pub.send_telemetry_all_devices()
+                data.delete_all_devices()
+        nb_devices = 0
 
 if __name__ == '__main__':
     main_app()

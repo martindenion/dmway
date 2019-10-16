@@ -1,4 +1,5 @@
 import json
+import time
 
 
 class Verification:
@@ -50,6 +51,12 @@ class Verification:
         for cle in raw_dict.values():
             values_list.append(cle)
         return values_list
+
+    def set_ts(self, raw_json):
+        ts = int(round(time.time() * 1000))
+        raw_dict = self.json_to_dict(raw_json)
+        raw_dict['ts'] = ts
+        return json.dumps(raw_dict)
 
     def verify_keys(self, raw_json):
         """
