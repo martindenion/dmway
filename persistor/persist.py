@@ -148,3 +148,26 @@ class Database:
                 self.sqlite_connection.close()
                 print("the sqlite connection is closed")
         return rows[0]
+
+    def select_all_devices(self):
+        """
+        Method that selects all lines in the device table with the MAC address specified in the parameter and returns
+        a list of tuples, considering that each tple correspond to a line
+        :return: list
+        """
+        row = []
+        try:
+            sql_select_query = "SELECT * FROM devices"
+            cursor = self.sqlite_connection.cursor()
+            cursor.execute(sql_select_query)
+            self.sqlite_connection.commit()
+            rows = cursor.fetchall()
+            for row in rows:
+                print(row)
+        except sqlite3.Error as error:
+            print("Failed to select device from sqlite table", error)
+        finally:
+            if self.sqlite_connection:
+                self.sqlite_connection.close()
+                print("the sqlite connection is closed")
+        return rows
