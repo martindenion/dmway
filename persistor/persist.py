@@ -86,10 +86,6 @@ class Database:
             self.sqlite_connection.commit()
         except sqlite3.Error as error:
             print("Failed to insert device in sqlite table", error)
-        finally:
-            if self.sqlite_connection:
-                self.sqlite_connection.close()
-                print("the sqlite connection is closed")
 
     def delete_device(self, addr):
         """
@@ -105,10 +101,6 @@ class Database:
             self.sqlite_connection.commit()
         except sqlite3.Error as error:
             print("Failed to delete device from sqlite table", error)
-        finally:
-            if self.sqlite_connection:
-                self.sqlite_connection.close()
-                print("the sqlite connection is closed")
 
     def delete_all_devices(self):
         """
@@ -122,10 +114,6 @@ class Database:
             self.sqlite_connection.commit()
         except sqlite3.Error as error:
             print("Failed to delete device from sqlite table", error)
-        finally:
-            if self.sqlite_connection:
-                self.sqlite_connection.close()
-                print("the sqlite connection is closed")
 
     def select_device(self, addr):
         """
@@ -144,10 +132,6 @@ class Database:
                 print(row)
         except sqlite3.Error as error:
             print("Failed to select device from sqlite table", error)
-        finally:
-            if self.sqlite_connection:
-                self.sqlite_connection.close()
-                print("the sqlite connection is closed")
         return rows[0]
 
     def select_all_devices(self):
@@ -167,8 +151,4 @@ class Database:
                 print(row)
         except sqlite3.Error as error:
             print("Failed to select device from sqlite table", error)
-        finally:
-            if self.sqlite_connection:
-                self.sqlite_connection.close()
-                print("the sqlite connection is closed")
         return rows

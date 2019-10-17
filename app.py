@@ -28,25 +28,23 @@ def main_app():
         # Reading serial port
         sub.read_serial()
         raw_json = sub.raw_json
-        #raw_json = json3
+        # raw_json = json3
         # Comparing previous and current raw JSON to not send several times the same frame
         if raw_json != raw_json_rg:
             raw_json_rg = raw_json
             raw_json_sent = verif.modify_ts(raw_json)
             # Verifying the format of the JSON frame
             if verif.verify_keys(raw_json_sent):
-                if verif.verify_values(raw_json_sent):
-                    # Saving JSON frame in the SQLite database
-                    data.create_connection()
-                    data.insert_device(raw_json_sent)
-                    nb_devices += 1
-                    flag_for_pub = True
-                else:
-                    print("Error format from device : wrong value(s)")
+                # if verif.verify_values(raw_json_sent):
+                # Saving JSON frame in the SQLite database
+                data.insert_device(raw_json_sent)
+                nb_devices += 1
+                flag_for_pub = True
+                # else:
+                #    print("Error format from device : wrong value(s)")
             else:
                 print("Error format from device : wrong key(s)")
             if nb_devices > 0 and flag_for_pub:
-                data.create_connection()
                 pub.create_devices()
                 pub.send_telemetry_all_devices()
                 data.delete_all_devices()
