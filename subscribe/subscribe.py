@@ -22,10 +22,30 @@ class Subscribe:
         )
         self.broker_address = "localhost"
 
+    def on_connect(client, userdata, rc):
+        print("Connected with result code " + str(rc))
+        # Subscribing in on_connect() means that if we lose the connection and
+        # reconnect then subscriptions will be renewed.
+        client.subscribe("localhost")
+
+    i = ""
+
+    # The callback for when a PUBLISH message is received from the server.
+    def on_message(client, userdata, msg):
+        print(msg.topic + " " + str(msg.payload))
+        global i
+        i = str(msg.payload)
+
     def read_serial_to_mqtt(self):
-        try:
-            client = mqtt.Client()
-            client.connect(self.broker_address)
-            self.raw_json = client.subscribe("localhost/serial")
-        except KeyboardInterrupt:
-            pass
+
+        client = mqtt.Client()
+        client.on_connect = self.on_connect()
+        client.on_message = self.on_message()
+
+        client.connect(self.broker_address, 1883, 60)
+        self.raw_json = i
+        # Blocking call that processes network traffic, dispatches callbacks and
+        # handles reconnecting.
+        # Other loop*() functions are available that give a threaded interface and a
+        # manual interface.
+        # client.loop_forever()
