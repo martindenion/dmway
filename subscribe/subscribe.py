@@ -4,6 +4,7 @@ import time
 import serial
 import sys
 import json
+import paho.mqtt.client as mqtt
 
 class Subscribe:
     def __init__(self):
@@ -19,14 +20,12 @@ class Subscribe:
             bytesize=serial.EIGHTBITS,
             timeout=1
         )
+        self.broker_address = "localhost"
 
-    def read_serial(self):
+    def read_serial_to_mqtt(self):
         try:
-            #while True:
-            self.raw_json = self.ser.readline()
-            # self.next_reading += self.interval
-            # sleep_time = self.next_reading - time.time()
-            # if sleep_time > 0:
-            #    time.sleep(sleep_time)
+            client = mqtt.Client()
+            client.connect(self.broker_address)
+            self.raw_json = client.subscribe("localhost/serial")
         except KeyboardInterrupt:
             pass
