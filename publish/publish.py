@@ -54,7 +54,6 @@ class Publish:
         client.disconnect()
 
     def which_floor(self, floor):
-        """Cette méthode renvoie le jeton d'accès correspondant à la passerelle de l'étage choisi"""
         switcher = {
             0: self.gnd_floor_gtw_access_token,
             1: self.fst_floor_gtw_access_token,
