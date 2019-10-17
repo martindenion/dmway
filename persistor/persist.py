@@ -52,7 +52,7 @@ class Database:
         :return:
         """
         try:
-            self.sqlite_connection = sqlite3.connect(self.db_path_sd)
+            self.sqlite_connection = sqlite3.connect(self.db_path)
             print(sqlite3.version)
         except Error as e:
             print(e)
