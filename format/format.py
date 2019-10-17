@@ -52,10 +52,9 @@ class Verification:
             values_list.append(cle)
         return values_list
 
-    def set_ts(self, raw_json):
-        ts = int(round(time.time() * 1000))
+    def modify_ts(self, raw_json):
         raw_dict = self.json_to_dict(raw_json)
-        raw_dict['ts'] = ts
+        raw_dict['ts'] = int(round(time.time() * 1000))
         return json.dumps(raw_dict)
 
     def verify_keys(self, raw_json):
