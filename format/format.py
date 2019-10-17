@@ -66,6 +66,7 @@ class Verification:
         keys_list = self.get_keys(raw_json)
         model_keys_list = ['addr', 'name', 'type', 'ts', 'temperature', 'humidity', 'pressure', 'luminosity', 'sound']
         if 'addr' in keys_list and 'name' in keys_list and 'type' in keys_list:
+            print('Verifying keys ...')
             for key in keys_list:
                 print('key : {}'.format(key))
                 if key in model_keys_list:
@@ -85,7 +86,9 @@ class Verification:
         """
         raw_dict = self.json_to_dict(raw_json)
         values_list = self.get_values(raw_json)
+        print('Verifying values ...')
         for key, value in raw_dict.items():
+            print('value : {}'.format(value))
             if (key == 'addr' or key == 'name' or key == 'type') and isinstance(value, str):
                 self.success_values = True
             elif isinstance(value, int) or isinstance(value, float):

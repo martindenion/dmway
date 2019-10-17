@@ -51,9 +51,10 @@ class Database:
         Procedure that allows to create the connection to the SQLite database
         :return:
         """
+        print('Connecting to SQLite database ...')
         try:
             self.sqlite_connection = sqlite3.connect(self.db_path)
-            print(sqlite3.version)
+            print('Connected to SQLite database {}'.format(sqlite3.version))
         except Error as e:
             print(e)
 
@@ -116,10 +117,12 @@ class Database:
         Procedure that allows the removal of all devices from the table devices
         :return:
         """
+        print('Cleaning SQLite database ...')
         try:
             sql_delete_query = "DELETE FROM devices;"
             cursor = self.sqlite_connection.cursor()
             cursor.execute(sql_delete_query)
+            print('SQLite database is now empty')
             self.sqlite_connection.commit()
         except sqlite3.Error as error:
             print("Failed to delete device from sqlite table", error)
@@ -165,7 +168,7 @@ class Database:
             self.sqlite_connection.commit()
             rows = cursor.fetchall()
             for row in rows:
-                print(row)
+                print("{} selected from SQLite database".format(row))
         except sqlite3.Error as error:
             print("Failed to select device from sqlite table", error)
         finally:

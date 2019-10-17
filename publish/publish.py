@@ -47,7 +47,7 @@ class Publish:
         for dic in raw_list:
             try:
                 client.publish('v1/gateway/connect', dic, 1)
-                print(dic)
+                print('{} have been send to create device in Thingsboard'.format(dic))
             except KeyboardInterrupt:
                 pass
         client.loop_stop()
@@ -92,7 +92,7 @@ class Publish:
         for dic in raw_list:
             try:
                 client.publish('v1/gateway/telemetry', dic, 1)
-                print(dic)
+                print('{} have been send to send telemetry to Thingsboard'.format(dic))
             except KeyboardInterrupt:
                 pass
         client.loop_stop()
