@@ -7,7 +7,7 @@ import json
 
 class Subscribe:
     def __init__(self):
-        self.raw_json = '{"addr":"uneaddr","name":"uncapteur","type":"capteur","ts":1483228800000,"temperature":30,' \
+        self.raw_json = '{"addr":"uneaddr","name":"fstcapteur","type":"capteur","ts":1483228800000,"temperature":30,' \
                         '"humidity":50,"pressure":1015,"luminosity":10000,"sound":55}'
         self.interval = 10
         self.next_reading = time.time()

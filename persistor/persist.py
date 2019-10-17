@@ -22,6 +22,7 @@ class Database:
         """Identifies the physical location of the SQLite DB, the status of the connection to the SQLite database,
         and the devices and gateway tables"""
         self.db_path = r"C:\Users\Martin\PycharmProjects\mdgateway\persistor\python_sqlite.db"  #but :memory: in Raspberry Pi
+        self.db_path_rpi = ':memory:'
         self.sqlite_connection = None
         self.sql_create_devices_table = """ CREATE TABLE IF NOT EXISTS devices (
                                         id integer PRIMARY KEY,
@@ -50,7 +51,7 @@ class Database:
         :return:
         """
         try:
-            self.sqlite_connection = sqlite3.connect(self.db_path)
+            self.sqlite_connection = sqlite3.connect(self.db_path_rpi)
             print(sqlite3.version)
         except Error as e:
             print(e)
