@@ -28,7 +28,7 @@ class Database:
         self.sql_create_devices_table = """ CREATE TABLE IF NOT EXISTS devices (
                                         id integer PRIMARY KEY,
                                         addr text NOT NULL,
-                                        name text NOT NULL,
+                                        device text NOT NULL,
                                         type text NOT NULL,
                                         ts integer,
                                         temperature real,
@@ -53,7 +53,7 @@ class Database:
         """
         print('Connecting to SQLite database ...')
         try:
-            self.sqlite_connection = sqlite3.connect(self.db_path)
+            self.sqlite_connection = sqlite3.connect(self.db_path_sd)
             print('Connected to SQLite database {}'.format(sqlite3.version))
         except Error as e:
             print(e)
