@@ -22,7 +22,8 @@ class Database:
         """Identifies the physical location of the SQLite DB, the status of the connection to the SQLite database,
         and the devices and gateway tables"""
         self.db_path = r"C:\Users\Martin\PycharmProjects\mdgateway\persistor\python_sqlite.db"  #but :memory: in Raspberry Pi
-        self.db_path_rpi = ':memory:'
+        self.db_path_ram = ':memory:'
+        self.db_path_sd = r"\home\pi\dmway\persistor\python_sqlite.db"
         self.sqlite_connection = None
         self.sql_create_devices_table = """ CREATE TABLE IF NOT EXISTS devices (
                                         id integer PRIMARY KEY,
@@ -51,7 +52,7 @@ class Database:
         :return:
         """
         try:
-            self.sqlite_connection = sqlite3.connect(self.db_path_rpi)
+            self.sqlite_connection = sqlite3.connect(self.db_path_sd)
             print(sqlite3.version)
         except Error as e:
             print(e)
@@ -86,6 +87,10 @@ class Database:
             self.sqlite_connection.commit()
         except sqlite3.Error as error:
             print("Failed to insert device in sqlite table", error)
+        finally:
+            if self.sqlite_connection:
+                self.sqlite_connection.close()
+                print("the sqlite connection is closed")
 
     def delete_device(self, addr):
         """
@@ -101,6 +106,10 @@ class Database:
             self.sqlite_connection.commit()
         except sqlite3.Error as error:
             print("Failed to delete device from sqlite table", error)
+        finally:
+            if self.sqlite_connection:
+                self.sqlite_connection.close()
+                print("the sqlite connection is closed")
 
     def delete_all_devices(self):
         """
@@ -114,6 +123,10 @@ class Database:
             self.sqlite_connection.commit()
         except sqlite3.Error as error:
             print("Failed to delete device from sqlite table", error)
+        finally:
+            if self.sqlite_connection:
+                self.sqlite_connection.close()
+                print("the sqlite connection is closed")
 
     def select_device(self, addr):
         """
@@ -132,6 +145,10 @@ class Database:
                 print(row)
         except sqlite3.Error as error:
             print("Failed to select device from sqlite table", error)
+        finally:
+            if self.sqlite_connection:
+                self.sqlite_connection.close()
+                print("the sqlite connection is closed")
         return rows[0]
 
     def select_all_devices(self):
@@ -151,4 +168,8 @@ class Database:
                 print(row)
         except sqlite3.Error as error:
             print("Failed to select device from sqlite table", error)
+        finally:
+            if self.sqlite_connection:
+                self.sqlite_connection.close()
+                print("the sqlite connection is closed")
         return rows
