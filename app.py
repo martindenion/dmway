@@ -20,6 +20,7 @@ sub = None
 def running_handler(signum, frame):
     global sub
     try:
+        print("Cleaning process")
         sub.stop_running()
         sub.join()
     except:

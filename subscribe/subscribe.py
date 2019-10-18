@@ -40,7 +40,7 @@ class SubThread(threading.Thread):
         print(msg.topic + " " + str(msg.payload))
         var.raw_json = str(msg.payload)
 
-    def running_stop(self):
+    def stop_running(self):
         self.running = False
 
     def run(self):
