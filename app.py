@@ -1,7 +1,7 @@
 from format.format import Verification
 from persistor.persist import Database
 from publish.publish import Publish
-from subscribe.subscribe import Subscribe
+from subscribe.subscribe import SubThread
 import var
 
 
@@ -17,7 +17,7 @@ json3 = '{"addr":"uneadresse","name":"device2001","type":"capteur3","ts":1483228
 def main_app():
     verif = Verification()
     data = Database()
-    sub = Subscribe()
+    sub = SubThread()
     data.create_connection()
     data.create_table()
     pub = Publish()
@@ -27,7 +27,7 @@ def main_app():
     var.init()
     while True:
         # Reading serial port
-        sub.read_serial_to_mqtt()
+        sub.start()
         raw_json = var.raw_json
         # raw_json = json3
         # Comparing previous and current raw JSON to not send several times the same frame

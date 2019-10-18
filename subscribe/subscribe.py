@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import threading
 import os
 import time
 import serial
@@ -8,8 +9,9 @@ import paho.mqtt.client as mqtt
 import var
 
 
-class Subscribe:
+class SubThread(threading.Thread):
     def __init__(self):
+        threading.Thread.__init__(self)
         self.raw_json = '{"addr":"uneaddr","device":"fstcapteur","type":"capteur","ts":1483228800000,"temperature":30,' \
                         '"humidity":50,"pressure":1015,"luminosity":10000,"sound":55}'
         # self.interval = 10
@@ -31,12 +33,13 @@ class Subscribe:
         # reconnect then subscriptions will be renewed.
         client.subscribe("localhost")
 
-    # The callback for when a PUBLISH message is received from the server.
+        # The callback for when a PUBLISH message is received from the server.
+
     def on_message(client, userdata, msg):
         print(msg.topic + " " + str(msg.payload))
         var.raw_json = str(msg.payload)
 
-    def read_serial_to_mqtt(self):
+    def run(self):
         self.client = mqtt.Client()
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
