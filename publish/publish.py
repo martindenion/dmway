@@ -173,14 +173,14 @@ class Publish:
         name = ""
         for tuples in tuples_list:
             for value in tuples:
-                if value is not None:
-                    if i == 2:
-                        name = value
-                    elif i == 4:
-                        raw_dict['ts'] = value
-                    elif i > 4:
+                if i == 2:
+                    name = value
+                elif i == 4:
+                    raw_dict['ts'] = value
+                elif i > 4:
+                    if value is not None:
                         raw_dict['values'][keys_list[j]] = value
-                        j += 1
+                    j += 1
                 i += 1
             l.append('{\"' + name + '\": [' +json.dumps(raw_dict) + ']' + '}')
             i = 0

@@ -26,7 +26,6 @@ class SubThread(threading.Thread):
         )
         self.broker_address = "localhost"
         self.client = None
-        self.running = True
 
     def on_connect(self, client, userdata, flags, rc):
         print("Connected with result code " + str(rc))
@@ -41,7 +40,6 @@ class SubThread(threading.Thread):
         var.raw_json = str(msg.payload)
 
     def stop_running(self):
-        self.running = False
         self.client.disconnect()
 
     def run(self):

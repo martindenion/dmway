@@ -53,7 +53,7 @@ class Database:
         """
         print('Connecting to SQLite database ...')
         try:
-            self.sqlite_connection = sqlite3.connect(self.db_path_sd)
+            self.sqlite_connection = sqlite3.connect(self.db_path)
             print('Connected to SQLite database {}'.format(sqlite3.version))
         except Error as e:
             print(e)
