@@ -24,14 +24,14 @@ def main_app():
     flag_for_pub = False
     raw_json_rg = ""
     nb_devices = 0
+    var.init()
     while True:
-        var.init()
         # Reading serial port
         sub.read_serial_to_mqtt()
-        raw_json = sub.raw_json
+        raw_json = var.raw_json
         # raw_json = json3
         # Comparing previous and current raw JSON to not send several times the same frame
-        if raw_json != raw_json_rg:
+        if raw_json is not None and raw_json != raw_json_rg:
             raw_json_rg = raw_json
             raw_json_sent = verif.modify_ts(raw_json)
             # Verifying the format of the JSON frame
