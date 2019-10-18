@@ -91,7 +91,7 @@ class Verification:
             print('value : {}'.format(value))
             if (key == 'addr' or key == 'device' or key == 'type') and isinstance(value, basestring):
                 self.success_values = True
-            elif isinstance(value, int) or isinstance(value, float):
+            elif isinstance(value, int) or isinstance(value, float) or isinstance(value, long):
                 self.success_values = True
             elif isinstance(value, str):
                 print("{} est de type str".format(value))
