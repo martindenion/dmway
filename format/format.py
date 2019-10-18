@@ -89,7 +89,7 @@ class Verification:
         print('Verifying values ...')
         for key, value in raw_dict.items():
             print('value : {}'.format(value))
-            if (key == 'addr' or key == 'device' or key == 'type') and isinstance(value, str):
+            if (key == 'addr' or key == 'device' or key == 'type') and isinstance(value, basestring):
                 self.success_values = True
             elif isinstance(value, int) or isinstance(value, float):
                 self.success_values = True
