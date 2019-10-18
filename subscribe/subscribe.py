@@ -42,6 +42,7 @@ class SubThread(threading.Thread):
 
     def stop_running(self):
         self.running = False
+        self.client.disconnect()
 
     def run(self):
         self.client = mqtt.Client()
@@ -50,12 +51,7 @@ class SubThread(threading.Thread):
 
         self.client.connect(self.broker_address, 1883, 60)
 
-        self.client.loop_start()
-
-        while self.running:
-            pass
-
-        self.client.loop_stop()
+        self.client.loop_forever()
         # Blocking call that processes network traffic, dispatches callbacks and
         # handles reconnecting.
         # Other loop*() functions are available that give a threaded interface and a
