@@ -23,6 +23,7 @@ class Subscribe:
             timeout=1
         )
         self.broker_address = "localhost"
+        self.client = None
 
     def on_connect(client, userdata, rc):
         print("Connected with result code " + str(rc))
@@ -36,11 +37,11 @@ class Subscribe:
         var.raw_json = str(msg.payload)
 
     def read_serial_to_mqtt(self):
-        client = mqtt.Client()
-        client.on_connect = self.on_connect
-        client.on_message = self.on_message
+        self.client = mqtt.Client()
+        self.client.on_connect = self.on_connect
+        self.client.on_message = self.on_message
 
-        client.connect(self.broker_address, 1883, 60)
+        self.client.connect(self.broker_address, 1883, 60)
 
         # Blocking call that processes network traffic, dispatches callbacks and
         # handles reconnecting.
