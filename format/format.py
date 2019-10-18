@@ -93,6 +93,9 @@ class Verification:
                 self.success_values = True
             elif isinstance(value, int) or isinstance(value, float):
                 self.success_values = True
+            elif isinstance(value, str):
+                print("{} est de type str".format(value))
+                self.success_values = False
             else:
                 self.success_values = False
                 break
