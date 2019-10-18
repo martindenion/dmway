@@ -2,6 +2,7 @@ from format.format import Verification
 from persistor.persist import Database
 from publish.publish import Publish
 from subscribe.subscribe import Subscribe
+import var
 
 
 json2 = '{"name":"device31","type":"capteur1","ts":1483228800000,"temperature":30,"humidity":50,"pressure":1015,' \
@@ -24,6 +25,7 @@ def main_app():
     raw_json_rg = ""
     nb_devices = 0
     while True:
+        var.init()
         # Reading serial port
         sub.read_serial_to_mqtt()
         raw_json = sub.raw_json

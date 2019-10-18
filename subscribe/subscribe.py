@@ -5,6 +5,8 @@ import serial
 import sys
 import json
 import paho.mqtt.client as mqtt
+import var
+
 
 class Subscribe:
     def __init__(self):
@@ -28,22 +30,18 @@ class Subscribe:
         # reconnect then subscriptions will be renewed.
         client.subscribe("localhost")
 
-    i = ""
-
     # The callback for when a PUBLISH message is received from the server.
     def on_message(client, userdata, msg):
         print(msg.topic + " " + str(msg.payload))
-        global i
-        i = str(msg.payload)
+        var.raw_json = str(msg.payload)
 
     def read_serial_to_mqtt(self):
-
         client = mqtt.Client()
-        client.on_connect = self.on_connect()
-        client.on_message = self.on_message()
+        client.on_connect = self.on_connect
+        client.on_message = self.on_message
 
         client.connect(self.broker_address, 1883, 60)
-        self.raw_json = i
+
         # Blocking call that processes network traffic, dispatches callbacks and
         # handles reconnecting.
         # Other loop*() functions are available that give a threaded interface and a
