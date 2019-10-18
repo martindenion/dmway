@@ -46,7 +46,7 @@ def main_app():
         raw_json = var.raw_json
         # raw_json = json3
         # Comparing previous and current raw JSON to not send several times the same frame
-        if raw_json is not None and raw_json != raw_json_rg:
+        if raw_json != "" and raw_json is not None and raw_json != raw_json_rg:
             raw_json_rg = raw_json
             raw_json_sent = verif.modify_ts(raw_json)
             # Verifying the format of the JSON frame
