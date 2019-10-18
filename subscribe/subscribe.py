@@ -26,6 +26,7 @@ class SubThread(threading.Thread):
         )
         self.broker_address = "localhost"
         self.client = None
+        self.running = True
 
     def on_connect(self, client, userdata, flags, rc):
         print("Connected with result code " + str(rc))
@@ -39,6 +40,9 @@ class SubThread(threading.Thread):
         print(msg.topic + " " + str(msg.payload))
         var.raw_json = str(msg.payload)
 
+    def running_stop(self):
+        self.running = False
+
     def run(self):
         self.client = mqtt.Client()
         self.client.on_connect = self.on_connect
@@ -46,12 +50,15 @@ class SubThread(threading.Thread):
 
         self.client.connect(self.broker_address, 1883, 60)
 
-        self.client.loop_forever()
+        self.client.loop_start()
 
-        while True:
+        while self.running:
             pass
+
+        self.client.loop_stop()
         # Blocking call that processes network traffic, dispatches callbacks and
         # handles reconnecting.
         # Other loop*() functions are available that give a threaded interface and a
         # manual interface.
+
 

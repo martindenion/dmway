@@ -3,6 +3,8 @@ from persistor.persist import Database
 from publish.publish import Publish
 from subscribe.subscribe import SubThread
 import var
+import sys
+import signal
 
 
 json2 = '{"name":"device31","type":"capteur1","ts":1483228800000,"temperature":30,"humidity":50,"pressure":1015,' \
@@ -13,8 +15,20 @@ json3 = '{"addr":"uneadresse","name":"device2001","type":"capteur3","ts":1483228
         '"pressure":1015,' \
         '"luminosity":10000,"sound":55}'
 
+sub = None
+
+def running_handler(signum, frame):
+    global sub
+    try:
+        sub.stop_running()
+        sub.join()
+    except:
+        pass
+    sys.exit(0)
 
 def main_app():
+    global sub
+    signal.signal(signal.SIGINT, running_handler)
     verif = Verification()
     data = Database()
     sub = SubThread()
