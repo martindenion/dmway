@@ -27,7 +27,7 @@ class SubThread(threading.Thread):
         self.broker_address = "localhost"
         self.client = None
 
-    def on_connect(self, client, userdata, rc):
+    def on_connect(self, client, userdata, flags, rc):
         print("Connected with result code " + str(rc))
         # Subscribing in on_connect() means that if we lose the connection and
         # reconnect then subscriptions will be renewed.
