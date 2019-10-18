@@ -27,7 +27,7 @@ class SubThread(threading.Thread):
         self.broker_address = "localhost"
         self.client = None
 
-    def on_connect(client, userdata, rc):
+    def on_connect(self, client, userdata, rc):
         print("Connected with result code " + str(rc))
         # Subscribing in on_connect() means that if we lose the connection and
         # reconnect then subscriptions will be renewed.
@@ -35,7 +35,7 @@ class SubThread(threading.Thread):
 
         # The callback for when a PUBLISH message is received from the server.
 
-    def on_message(client, userdata, msg):
+    def on_message(self, client, userdata, msg):
         print(msg.topic + " " + str(msg.payload))
         var.raw_json = str(msg.payload)
 
@@ -47,7 +47,7 @@ class SubThread(threading.Thread):
         self.client.connect(self.broker_address, 1883, 60)
 
         self.client.loop_forever()
-        
+
         while True:
             pass
         # Blocking call that processes network traffic, dispatches callbacks and
