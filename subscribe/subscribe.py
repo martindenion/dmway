@@ -31,7 +31,7 @@ class SubThread(threading.Thread):
         print("Connected with result code " + str(rc))
         # Subscribing in on_connect() means that if we lose the connection and
         # reconnect then subscriptions will be renewed.
-        client.subscribe("localhost")
+        client.subscribe("localhost/serial")
 
         # The callback for when a PUBLISH message is received from the server.
 
@@ -46,6 +46,8 @@ class SubThread(threading.Thread):
 
         self.client.connect(self.broker_address, 1883, 60)
 
+        while True:
+            pass
         # Blocking call that processes network traffic, dispatches callbacks and
         # handles reconnecting.
         # Other loop*() functions are available that give a threaded interface and a

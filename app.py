@@ -25,9 +25,9 @@ def main_app():
     raw_json_rg = ""
     nb_devices = 0
     var.init()
+    sub.start()
     while True:
         # Reading serial port
-        sub.start()
         raw_json = var.raw_json
         # raw_json = json3
         # Comparing previous and current raw JSON to not send several times the same frame
