@@ -15,4 +15,4 @@ This approach is a direct alternative to Thingsboard Gateway, offering a more ge
 
 Here is how dmway fits into our network architecture :
 
-<img src="./img/dmwayarchi.png?raw=true" width="265" height="159">
+<img src="./img/Zolertia-DMWAY-Thingsboard.png?raw=true" width="265" height="159">
