@@ -11,4 +11,8 @@ This application includes :
 - the creation of sensors on Thingsboard
 - the provision of data on Thingsboard
 
-This approach is a direct alternative to Thingsboard Gateway, offering a more generic view by providing dynamic mapping
+This approach is a direct alternative to Thingsboard Gateway, offering a more generic view by providing dynamic mapping.
+
+Here is how dmway fits into our network architecture :
+
+<img src="./img/dmwayarchi.png?raw=true" width="265" height="159">
