@@ -17,5 +17,6 @@ Here is how dmway fits into our network architecture :
 
 <img src="./img/dmwayarchi.jpg?raw=true">
 
-Sources : https://thingsboard.io/docs/iot-gateway/what-is-iot-gateway/
-          https://www.startupbootcamp.org/startups/zolertia/
+Sources : 
+https://thingsboard.io/docs/iot-gateway/what-is-iot-gateway/
+https://www.startupbootcamp.org/startups/zolertia/
