@@ -27,7 +27,7 @@ class Database:
         self.sqlite_connection = None
         self.sql_create_devices_table = """ CREATE TABLE IF NOT EXISTS devices (
                                         id integer PRIMARY KEY,
-                                        addr text NOT NULL,
+                                        mac text NOT NULL,
                                         device text NOT NULL,
                                         type text NOT NULL,
                                         ts integer,
@@ -35,7 +35,9 @@ class Database:
                                         humidity real,
                                         pressure real,
                                         luminosity real,
-                                        sound real
+                                        loudness real,
+                                        gas real,
+                                        iaq text NOT NULL
                                     ); """
         self.sql_create_gateway_table = """CREATE TABLE IF NOT EXISTS gateway (
                                     id integer PRIMARY KEY,

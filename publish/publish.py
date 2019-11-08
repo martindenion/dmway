@@ -53,6 +53,21 @@ class Publish:
         client.loop_stop()
         client.disconnect()
 
+    def send_attributes(self):
+        client = mqtt.Client()
+        client.username_pw_set(self.fst_floor_gtw_access_token)
+        client.connect(self.thingsboard_host, 1883, 60)
+        raw_list = self.sqlite_to_attributes_all_devices()
+        client.loop_start()
+        for dic in raw_list:
+            try:
+                client.publish('v1/gateway/attributes', dic, 1)
+                print('{} have been send to send mac address of the device in Thingsboard'.format(dic))
+            except KeyboardInterrupt:
+                pass
+        client.loop_stop()
+        client.disconnect()
+
     def which_floor(self, floor):
         switcher = {
             0: self.gnd_floor_gtw_access_token,
@@ -139,6 +154,29 @@ class Publish:
             j = 0
         return l
 
+    def sqlite_to_attributes_all_devices(self):
+        select = Database()
+        select.create_connection()
+        raw_dict = {}
+        mac = ""
+        name = ""
+        l = []
+        raw_json = select.select_all_devices()
+        i = 0
+        j = 0
+        for raw in raw_json:
+            for value in raw:
+                if i == 1:
+                    mac = value
+                elif i == 2:
+                    name = value
+                    j += 1
+                i += 1
+            l.append('{\"' + name + '\":{\"mac address\":\"' + mac + '\"}}')
+            i = 0
+            j = 0
+        return l
+
     def sqlite_to_telemetry(self, addr):
         """
         Method that selects a line from the devices table and returns this data as a string respecting the
@@ -149,7 +187,7 @@ class Publish:
         select = Database()
         select.create_connection()
         raw_dict = {'ts': None, 'values': {}}
-        keys_list = ['temperature', 'humidity', 'pressure', 'luminosity', 'sound']
+        keys_list = ['temperature', 'humidity', 'pressure', 'luminosity', 'loudness', 'gas', 'iaq']
         raw_json = select.select_device(addr)
         raw_dict['ts'] = raw_json[3]
         i = 0
@@ -165,7 +203,7 @@ class Publish:
         select = Database()
         select.create_connection()
         raw_dict = {'ts': None, 'values': {}}
-        keys_list = ['temperature', 'humidity', 'pressure', 'luminosity', 'sound']
+        keys_list = ['temperature', 'humidity', 'pressure', 'luminosity', 'loudness', 'gas', 'iaq']
         tuples_list = select.select_all_devices()
         i = 0
         j = 0

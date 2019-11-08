@@ -2,7 +2,7 @@
 import threading
 import os
 import time
-import serial
+#import serial
 import sys
 import json
 import paho.mqtt.client as mqtt
