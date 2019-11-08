@@ -11,4 +11,13 @@ This application includes :
 - the creation of sensors on Thingsboard
 - the provision of data on Thingsboard
 
-This approach is a direct alternative to Thingsboard Gateway, offering a more generic view by providing dynamic mapping
+This approach is a direct alternative to Thingsboard Gateway, offering a more generic view by providing dynamic mapping.
+
+Here is how dmway fits into our network architecture :
+
+<img src="./img/Zolertia-DMWAY-Thingsboard.jpg?raw=true">
+
+# Sources
+
+https://thingsboard.io/docs/iot-gateway/what-is-iot-gateway/
+https://www.startupbootcamp.org/startups/zolertia/
