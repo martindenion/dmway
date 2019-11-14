@@ -37,7 +37,7 @@ class Database:
                                         luminosity real,
                                         loudness real,
                                         gas real,
-                                        iaq text NOT NULL
+                                        iaq text
                                     ); """
         self.sql_create_gateway_table = """CREATE TABLE IF NOT EXISTS gateway (
                                     id integer PRIMARY KEY,
