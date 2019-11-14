@@ -16,14 +16,14 @@ class SubThread(threading.Thread):
                         '"humidity":50,"pressure":1015,"luminosity":10000,"sound":55}'
         # self.interval = 10
         # self.next_reading = time.time()
-        self.ser = serial.Serial(
-            port='/dev/ttyUSB0',
-            baudrate=115200,
-            parity=serial.PARITY_NONE,
-            stopbits=serial.STOPBITS_ONE,
-            bytesize=serial.EIGHTBITS,
-            timeout=1
-        )
+        # self.ser = serial.Serial(
+        #    port='/dev/ttyUSB0',
+        #    baudrate=115200,
+        #    parity=serial.PARITY_NONE,
+        #    stopbits=serial.STOPBITS_ONE,
+        #    bytesize=serial.EIGHTBITS,
+        #    timeout=1
+        #)
         self.broker_address = "localhost"
         self.client = None
 
@@ -38,6 +38,7 @@ class SubThread(threading.Thread):
     def on_message(self, client, userdata, msg):
         print(msg.topic + " '" + str(msg.payload) + "'" + str(len(msg.payload)))
         var.raw_json = str(msg.payload)
+        print("'" + str(msg.payload) + "'")
 
     def stop_running(self):
         self.client.disconnect()
