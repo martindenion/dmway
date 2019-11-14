@@ -36,9 +36,9 @@ class SubThread(threading.Thread):
         # The callback for when a PUBLISH message is received from the server.
 
     def on_message(self, client, userdata, msg):
-        print(msg.topic + " '" + str(msg.payload) + "'" + str(len(msg.payload)))
-        var.raw_json = str(msg.payload)
-        print("'" + str(msg.payload) + "'")
+        payload = msg.payload.decode("utf-8")
+        print(msg.topic + " '" + payload + "'" + str(len(payload)))
+        var.raw_json = payload
 
     def stop_running(self):
         self.client.disconnect()
