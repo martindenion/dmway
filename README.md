@@ -28,18 +28,9 @@ Here is how dmway fits into our network architecture :
 
 ### Prerequisites
 
-#### Python package
-
-dmway requires at least Python 3.5 version so you don't need to upgrade Python to a newer version : 
-
-```
-$ sudo apt update
-$ sudo apt install -y python3.5 python3-pip
-```
-
 #### Thingsboard
 
-You must have Thingsboard platform running.
+First, you must have Thingsboard platform running.
 
 If not, you can follow the Thingsboard installation guides : https://thingsboard.io/docs/guides/#AnchorIDInstallationGuides
 
@@ -49,6 +40,15 @@ You may also need to install the git tool for cloning the dmway project from Git
 
 ```
 $ sudo apt install -y git
+```
+
+#### Python package
+
+dmway requires at least Python 3.5 version so you don't need to upgrade Python to a newer version : 
+
+```
+$ sudo apt update
+$ sudo apt install -y python3.5 python3-pip
 ```
 
 #### Python dependancies
