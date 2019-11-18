@@ -122,14 +122,14 @@ Example of topic :
 
 For the moment, dmway subscribes to all topics in the following format  : 
 ```
-/dev/++/data
+/dev/+/data
 ```
 
 #### With local MQTT broker
 
 Execute the following command line :
 ```
-$ mosquitto_pub -h localhost -m "json_message" -t "/dev/add_topic/data"
+$ mosquitto_pub -h localhost -m "json_message" -t "/dev/+/data"
 ```
 
 The following diagram describes the MQTT publish and subscribe command around dmway with a local Mosquitto Broker :
@@ -140,13 +140,12 @@ The following diagram describes the MQTT publish and subscribe command around dm
 
 Execute the following command line :
 
-
-<img src="./img/cloudbroker.jpg?raw=true">
-
 ```
 $ mosquitto_pub -h test.mosquitto.org -m "json_message" -t "/dev/+/data"
 ```
+The following diagram describes the MQTT publish and subscribe command around dmway with a cloud Mosquitto Broker :
 
+<img src="./img/cloudbroker.jpg?raw=true">
 ## Sources
 
 * https://thingsboard.io/docs/iot-gateway/what-is-iot-gateway/
