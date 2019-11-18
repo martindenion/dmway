@@ -51,12 +51,10 @@ You may also need to install the git tool for cloning the dmway project from Git
 $ sudo apt install -y git
 ```
 
-#### Eclipse Paho MQTT Python client library
-
-Install this package to allow dmway to publish and subscribe by MQTT as a client :
+#### Python dependancies
 
 ```
-$ pip3 install paho-mqtt
+$ pip3 install requirements.txt
 ```
 
 To allow you to send MQTT messages and for dmway to be able to subscribe to the messages you send, install Mosquitto broker :
