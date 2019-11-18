@@ -28,26 +28,31 @@ Here is how dmway fits into our network architecture :
 
 ### Prerequisites
 
-dmway requires at least Python 3.5 version so you don't need to upgrade Python to a newer version.
-
-You need to install the following package only if your OS is Raspbian Strech :
 #### Python package
+
+dmway requires at least Python 3.5 version so you don't need to upgrade Python to a newer version : 
 
 ```
 $ sudo apt update
-$ sudo apt install -y python3-pip
+$ sudo apt install -y python3.5 python3-pip
 ```
 
-You may also need to install the git tool for cloning the dmway project from Github :
+#### Thingsboard
+
+You must have Thingsboard platform running.
+Thingsboard installation guides : https://thingsboard.io/docs/guides/#AnchorIDInstallationGuides
 
 #### Git tool
+
+You may also need to install the git tool for cloning the dmway project from Github :
 
 ```
 $ sudo apt install -y git
 ```
 
-Install this package to allow dmway to publish and subscribe by MQTT as a client :
 #### Eclipse Paho MQTT Python client library
+
+Install this package to allow dmway to publish and subscribe by MQTT as a client :
 
 ```
 $ pip3 install paho-mqtt
