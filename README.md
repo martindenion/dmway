@@ -54,10 +54,8 @@ $ sudo apt install -y git
 #### Python dependancies
 
 ```
-$ pip3 install requirements.txt
+$ pip3 install -r requirements.txt
 ```
-
-To allow you to send MQTT messages and for dmway to be able to subscribe to the messages you send, install Mosquitto broker :
 
 #### Eclipse Mosquitto
 
@@ -114,16 +112,20 @@ It can also contain these following fields :
 * gas
 * iaq
 
-example : 
+example of json_message : 
 ```
 {"mac":"00:12:4b:00:18:d6:f8:9e","device":"zolertia00:12:4b:00:18:d6:f8:9e","type":"remote","ts":1483228800000,"loudness":3228,"luminosity":212,"temperature":24,"humidity":27,"pressure":9899}
 ```
+
+The following diagram describes the MQTT publish and subscribe command around dmway with a local Mosquitto Broker :
+
+<img src="./img/pubandsubdmway.jpg?raw=true">
 
 #### With cloud MQTT broker
 
 * or write your app as described follows :
 
-<img src="./img/pubandsubdmway.jpg?raw=true">
+
 
 ## Sources
 
