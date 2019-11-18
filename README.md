@@ -40,7 +40,8 @@ $ sudo apt install -y python3.5 python3-pip
 #### Thingsboard
 
 You must have Thingsboard platform running.
-Thingsboard installation guides : https://thingsboard.io/docs/guides/#AnchorIDInstallationGuides
+
+If not, you can follow the Thingsboard installation guides : https://thingsboard.io/docs/guides/#AnchorIDInstallationGuides
 
 #### Git tool
 
