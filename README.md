@@ -73,8 +73,16 @@ Connected with result code 0
 ```
 
 dmway is now waiting for receiving JSON data by MQTT.
+To test if it is working well, you can either :
+* use the following command line in an other shell :
+```
+$ mosquitto_pub -h localhost -m "test" -t "/dev/+/data"
+```
+
+* write your application as dercribed in this following picture :
 
 <img src="./img/pubandsubdmway.jpg?raw=true">
+
 ## Sources
 
 * https://thingsboard.io/docs/iot-gateway/what-is-iot-gateway/
