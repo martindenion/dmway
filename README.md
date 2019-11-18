@@ -21,45 +21,45 @@ Here is how dmway fits into our network architecture :
 
 ## Getting started
 
-### Prerequisites
-
-#### OS requirements
+### OS tested
 
 * Raspbian Strech (desktop and lite version)
 * Raspbian Buster (desktop and lite version)
 
-#### Packages requirements
+### Prerequisites
 
 dmway requires at least Python 3.5 version so you don't need to upgrade Python to a newer version.
 
 You need to install the following package only if your OS is Raspbian Strech :
-##### Python package
+#### Python package
 
 ```
 $ sudo apt update
 $ sudo apt install -y python3-pip
 ```
 
+You may also need to install the git tool for cloning the dmway project from Github :
+
+#### Git tool
+
+```
+$ sudo apt install -y git
+```
+
 Install this package to allow dmway to publish and subscribe by MQTT as a client :
-##### Eclipse Paho MQTT Python client library
+#### Eclipse Paho MQTT Python client library
 
 ```
 $ pip3 install paho-mqtt
 ```
 
 To allow you to send MQTT messages and for dmway to be able to subscribe to the messages you send, install Mosquitto broker :
-##### Eclipse Mosquitto
+#### Eclipse Mosquitto
 
 ```
 $ sudo apt install -y mosquitto
 ```
-You may also need to install the git tool for cloning the dmway project from Github :
 
-##### Git tool
-
-```
-$ sudo apt install -y git
-```
 
 ### dmway installation
 
