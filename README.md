@@ -31,7 +31,6 @@ Here is how dmway fits into our network architecture :
 dmway requires at least Python 3.5 version so you don't need to upgrade Python to a newer version.
 
 You need to install the following package only if your OS is Raspbian Strech :
-
 ##### Python package
 
 ```
@@ -40,8 +39,7 @@ sudo apt install python3-pip
 ```
 
 Install this package to allow dmway to publish and subscribe by MQTT :
-
-##### paho-mqtt
+##### Eclipse Paho MQTT Python client library
 
 ```
 pip3 install paho-mqtt
