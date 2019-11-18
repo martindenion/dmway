@@ -134,7 +134,7 @@ $ mosquitto_pub -h localhost -m "json_message" -t "/dev/+/data"
 
 The following diagram describes the MQTT publish and subscribe command around dmway with a local Mosquitto Broker :
 
-<img src="./img/pubandsubdmway.jpg?raw=true">
+<img src="./img/pubandsubdmway2.jpg?raw=true">
 
 #### With cloud MQTT broker
 
