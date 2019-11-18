@@ -60,7 +60,8 @@ $ pip3 install -r requirements.txt
 #### Eclipse Mosquitto
 
 You can install a MQTT broker locally or use a MQTT broker on the cloud.
-These follwing way are using local Mosquitto broker but you can use your own MQTT broker.
+
+These following way use a local Mosquitto broker but you can use your own MQTT broker.
 
 ```
 $ sudo apt install -y mosquitto mosquitto-clients
@@ -117,7 +118,7 @@ For the moment, dmway subscribes to all topics in the following format  :
 /dev/+/data
 ```
 
-#### With local MQTT broker
+#### Publish json_message local MQTT broker
 
 Execute the following command line :
 ```
