@@ -59,14 +59,25 @@ $ pip3 install paho-mqtt
 ```
 
 To allow you to send MQTT messages and for dmway to be able to subscribe to the messages you send, install Mosquitto broker :
+
 #### Eclipse Mosquitto
 
+You can install a MQTT broker locally or use a MQTT broker on the cloud.
+These follwing two ways are using Mosquitto broker but you can use your own MQTT broker.
+
+##### Local MQTT broker
+
 ```
-$ sudo apt install -y mosquitto
+$ sudo apt install -y mosquitto mosquitto-clients
 ```
 
+##### Cloud MQTT broker
 
-### dmway installation
+```
+$ sudo apt install -y mosquitto-clients
+```
+
+### Running dmway
 
 Clone the dmway source code and execute the app.py Python file :
 ```
@@ -83,11 +94,33 @@ dmway is now waiting for receiving JSON data by MQTT.
 
 ### Test and configuration
 
-To check that dmway is working properly, you can either :
-* use the following command line in an other shell :
+#### With local MQTT broker
+
+Execute the following command line
 ```
-$ mosquitto_pub -h localhost -m "test" -t "/dev/+/data"
+$ mosquitto_pub -h localhost -m "json_message" -t "/dev/+/data"
 ```
+
+Your JSON message must contain at least these three fields :
+* mac
+* device
+* type
+
+It can also contain these following fields :
+* temperature
+* humidity
+* pressure
+* luminosity
+* loudness
+* gas
+* iaq
+
+example : 
+```
+{"mac":"00:12:4b:00:18:d6:f8:9e","device":"zolertia00:12:4b:00:18:d6:f8:9e","type":"remote","ts":1483228800000,"loudness":3228,"luminosity":212,"temperature":24,"humidity":27,"pressure":9899}
+```
+
+#### With cloud MQTT broker
 
 * or write your app as described follows :
 
