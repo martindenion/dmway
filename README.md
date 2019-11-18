@@ -146,6 +146,7 @@ $ mosquitto_pub -h test.mosquitto.org -m "json_message" -t "/dev/+/data"
 The following diagram describes the MQTT publish and subscribe command around dmway with a cloud Mosquitto Broker :
 
 <img src="./img/cloudbroker.jpg?raw=true">
+
 ## Sources
 
 * https://thingsboard.io/docs/iot-gateway/what-is-iot-gateway/
