@@ -79,7 +79,7 @@ To test if it is working well, you can either :
 $ mosquitto_pub -h localhost -m "test" -t "/dev/+/data"
 ```
 
-* write your application as dercribed in this following picture :
+* write your app as described follows :
 
 <img src="./img/pubandsubdmway.jpg?raw=true">
 
