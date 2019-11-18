@@ -91,12 +91,7 @@ dmway is now waiting for receiving JSON data by MQTT.
 
 ### Test and configuration
 
-#### With local MQTT broker
-
-Execute the following command line
-```
-$ mosquitto_pub -h localhost -m "json_message" -t "/dev/+/data"
-```
+#### Format of the message to send
 
 Your JSON message must contain at least these three fields :
 * mac
@@ -112,9 +107,29 @@ It can also contain these following fields :
 * gas
 * iaq
 
-example of json_message : 
+Example of json_message : 
 ```
 {"mac":"00:12:4b:00:18:d6:f8:9e","device":"zolertia00:12:4b:00:18:d6:f8:9e","type":"remote","ts":1483228800000,"loudness":3228,"luminosity":212,"temperature":24,"humidity":27,"pressure":9899}
+```
+#### Format of the topic
+
+To publish from your shell, you can replace '+' with what you want.  
+
+Example of topic : 
+```
+/dev/temperature/data
+```
+
+For the moment, dmway subscribes to all topics in the following format  : 
+```
+/dev/++/data
+```
+
+#### With local MQTT broker
+
+Execute the following command line :
+```
+$ mosquitto_pub -h localhost -m "json_message" -t "/dev/add_topic/data"
 ```
 
 The following diagram describes the MQTT publish and subscribe command around dmway with a local Mosquitto Broker :
@@ -123,9 +138,14 @@ The following diagram describes the MQTT publish and subscribe command around dm
 
 #### With cloud MQTT broker
 
-* or write your app as described follows :
+Execute the following command line :
 
 
+<img src="./img/cloudbroker.jpg?raw=true">
+
+```
+$ mosquitto_pub -h test.mosquitto.org -m "json_message" -t "/dev/+/data"
+```
 
 ## Sources
 
