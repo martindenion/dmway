@@ -38,13 +38,19 @@ $ sudo apt update
 $ sudo apt install -y python3-pip
 ```
 
-Install this package to allow dmway to publish and subscribe by MQTT :
+Install this package to allow dmway to publish and subscribe by MQTT as a client :
 ##### Eclipse Paho MQTT Python client library
 
 ```
 $ pip3 install paho-mqtt
 ```
 
+To allow you to send MQTT messages and for dmway to be able to subscribe to the messages you send, install Mosquitto broker :
+##### Eclipse Mosquitto
+
+```
+$ sudo apt install -y mosquitto
+```
 You may also need to install the git tool for cloning the dmway project from Github :
 
 ##### Git tool
@@ -55,10 +61,20 @@ $ sudo apt install -y git
 
 ### dmway installation
 
+Clone the dmway source code and execute the app.py Python file :
 ```
 $ git clone https://github.com/martindenion/dmway.git
+$ cd dmway
+$ python3 app.py
+Output: 
+Connecting to SQLite database ...
+Connected to SQLite database 2.6.0
+Connected with result code 0
 ```
 
+dmway is now waiting for receiving JSON data by MQTT.
+
+<img src="./img/pubandsubdmway.jpg?raw=true">
 ## Sources
 
 * https://thingsboard.io/docs/iot-gateway/what-is-iot-gateway/
