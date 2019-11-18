@@ -34,29 +34,29 @@ You need to install the following package only if your OS is Raspbian Strech :
 ##### Python package
 
 ```
-sudo apt update
-sudo apt install -y python3-pip
+$ sudo apt update
+$ sudo apt install -y python3-pip
 ```
 
 Install this package to allow dmway to publish and subscribe by MQTT :
 ##### Eclipse Paho MQTT Python client library
 
 ```
-~ $ pip3 install paho-mqtt
+$ pip3 install paho-mqtt
 ```
 
-You also might need to install git tool to provide cloning dmway project :
+You may also need to install the git tool for cloning the dmway project from Github :
 
 ##### Git tool
 
 ```
-sudo apt install -y git
+$ sudo apt install -y git
 ```
 
 ### dmway installation
 
 ```
-git clone https://github.com/martindenion/dmway.git
+$ git clone https://github.com/martindenion/dmway.git
 ```
 
 ## Sources
