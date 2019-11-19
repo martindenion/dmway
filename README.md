@@ -93,10 +93,6 @@ Execute the following command line :
 $ mosquitto_pub -h localhost -m "json_message" -t "/dev/+/data"
 ```
 
-The following diagram describes the MQTT publish and subscribe command around dmway with a local Mosquitto Broker :
-
-<img src="./img/pubandsubdmway2.jpg?raw=true">
-
 ## Sources
 
 * https://thingsboard.io/docs/iot-gateway/what-is-iot-gateway/
