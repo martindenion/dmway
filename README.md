@@ -97,6 +97,7 @@ $ chmod +x make_service.sh
 $ sudo ./make_service.sh 'dmway' '/home/pi/dmway/app.py' 'dmway.service' yes
 Output :
 Created symlink /etc/systemd/system/multi-user.target.wants/dmway.service → /etc/systemd/system/dmway.service.
+$ sudo reboot 
 ```
 dmway is now waiting for receiving JSON data by MQTT.
 
