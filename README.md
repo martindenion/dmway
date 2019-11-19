@@ -70,7 +70,10 @@ $ cd dmway
 $ pip3 install -r requirements.txt
 ```
 
-### Running dmway for development 
+### Running dmway 
+
+#### For development 
+
 Then, you can execute the app.py Python file :
 ```
 $ cd dmway
@@ -80,8 +83,9 @@ Connecting to SQLite database ...
 Connected to SQLite database 2.6.0
 Connected with result code 0
 ```
-
 dmway is now waiting for receiving JSON data by MQTT.
+
+##### For deployment
 
 ### Test and configuration
 
