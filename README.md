@@ -93,6 +93,7 @@ Considering this [format](https://github.com/martindenion/dmway/wiki/JSON-messag
 $ mosquitto_pub -h localhost -m "json_message" -t "/dev/+/data"
 ```
 
+In order to better understand what does this command in the dmway context, see this [diagram](https://github.com/martindenion/dmway/wiki/Pub-and-Sub-command-around-dmway)
 ## Sources
 
 * https://thingsboard.io/docs/iot-gateway/what-is-iot-gateway/
