@@ -85,11 +85,14 @@ Connected with result code 0
 ```
 dmway is now waiting for receiving JSON data by MQTT.
 
-##### For deployment
+#### For deployment
+
+```
+$ cd dmway
+$ ./make_service.sh 'dmway' '/home/pi/dmway/app.py' 'dmway.service' yes
+```
 
 ### Test and configuration
-
-
 
 #### Publish json_message with local MQTT broker
 
@@ -99,6 +102,7 @@ $ mosquitto_pub -h localhost -m "json_message" -t "/dev/+/data"
 ```
 
 In order to better understand what does this command in the dmway context, see this [diagram](https://github.com/martindenion/dmway/wiki/Pub-and-Sub-command-around-dmway)
+
 ## Sources
 
 * https://thingsboard.io/docs/iot-gateway/what-is-iot-gateway/
