@@ -88,7 +88,7 @@ dmway is now waiting for receiving JSON data by MQTT.
 
 #### Publish json_message local MQTT broker
 
-Execute the following command line :
+Considering this ![format](https://github.com/martindenion/dmway/wiki/format), execute the following command line,  :
 ```
 $ mosquitto_pub -h localhost -m "json_message" -t "/dev/+/data"
 ```
