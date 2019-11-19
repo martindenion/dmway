@@ -67,7 +67,7 @@ Clone the dmway source code and install dmway dependancies :
 ```
 $ git clone https://github.com/martindenion/dmway.git
 $ cd dmway
-$ pip3 install -r requirements.txt
+$ sudo pip3 install -r requirements.txt
 ```
 
 ### Running dmway 
@@ -89,7 +89,8 @@ dmway is now waiting for receiving JSON data by MQTT.
 
 ```
 $ cd dmway
-$ ./make_service.sh 'dmway' '/home/pi/dmway/app.py' 'dmway.service' yes
+$ chmod +x make_service.sh
+$ sudo ./make_service.sh 'dmway' '/home/pi/dmway/app.py' 'dmway.service' yes
 ```
 
 ### Test and configuration
