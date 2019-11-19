@@ -70,7 +70,7 @@ $ cd dmway
 $ pip3 install -r requirements.txt
 ```
 
-### Running dmway
+### Running dmway for development 
 Then, you can execute the app.py Python file :
 ```
 $ cd dmway
