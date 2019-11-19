@@ -105,7 +105,7 @@ $ sudo ./make_service.sh 'dmway' '/home/pi/dmway/app.py' 'dmway.service' yes
 
 Considering this [format](https://github.com/martindenion/dmway/wiki/JSON-message-and-topic-format), execute the following command line,  :
 ```
-$ mosquitto_pub -h localhost -m "json_message" -t "/dev/+/data"
+$ mosquitto_pub -h localhost -m "json_message" -t "topic"
 ```
 
 In order to better understand what does this command in the dmway context, see this [diagram](https://github.com/martindenion/dmway/wiki/Pub-and-Sub-command-around-dmway)
