@@ -101,7 +101,7 @@ $ sudo ./make_service.sh 'dmway' '/home/pi/dmway/app.py' 'dmway.service' yes
 
 *TO DO*
 
-### Test and configuration
+### Quick start test
 
 #### Publish json_message with local MQTT broker
 
