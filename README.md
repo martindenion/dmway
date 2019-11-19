@@ -66,6 +66,7 @@ $ sudo apt install -y python3.5 python3-pip
 Clone the dmway source code and install dmway dependancies : 
 ```
 $ git clone https://github.com/martindenion/dmway.git
+$ cd dmway
 $ pip3 install -r requirements.txt
 ```
 
