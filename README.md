@@ -19,6 +19,8 @@ Here is how dmway fits into our network architecture :
 
 <img src="./img/Zolertia-DMWAY-Thingsboard.jpg?raw=true">
 
+If you want a lower-level view to understand how dmway works, a [flowchart](https://github.com/martindenion/dmway/wiki/dmway-flowchart) is available.
+
 ## Getting started
 
 ### OS tested
@@ -32,7 +34,7 @@ Here is how dmway fits into our network architecture :
 
 First, you must have Thingsboard platform running.
 
-If not, you can follow the Thingsboard installation guides : https://thingsboard.io/docs/guides/#AnchorIDInstallationGuides
+If not, you can follow the [Thingsboard installation guides](https://thingsboard.io/docs/guides/#AnchorIDInstallationGuides)
 
 #### Eclipse Mosquitto
 
@@ -111,7 +113,7 @@ $ mosquitto_pub -h localhost -m "json_message" -t "topic"
 
 Note : if you ran dmway using the development way, execute this previous command line from another duplicated shell to let dmway running correctly.
 
-In order to better understand what does this command in the dmway context, see this [diagram](https://github.com/martindenion/dmway/wiki/Pub-and-Sub-command-around-dmway)
+In order to better understand what does this command in the dmway context, see this [diagram](https://github.com/martindenion/dmway/wiki/Pub-and-Sub-command-around-dmway).
 
 ## Sources
 
