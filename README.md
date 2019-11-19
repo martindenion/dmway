@@ -72,6 +72,8 @@ $ sudo pip3 install -r requirements.txt
 
 ### Running dmway 
 
+To run dmway, 3 methods are possible depending on the needs : 
+
 #### For development 
 
 Then, you can execute the app.py Python file :
@@ -85,13 +87,17 @@ Connected with result code 0
 ```
 dmway is now waiting for receiving JSON data by MQTT.
 
-#### For deployment
+#### For deployment with systemd
 
 ```
 $ cd dmway
 $ chmod +x make_service.sh
 $ sudo ./make_service.sh 'dmway' '/home/pi/dmway/app.py' 'dmway.service' yes
 ```
+
+#### For deployment with Docker
+
+TO DO
 
 ### Test and configuration
 
