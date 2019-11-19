@@ -34,7 +34,7 @@ If you want a lower-level view to understand how dmway works, a [flowchart](http
 
 First, you must have Thingsboard platform running.
 
-If not, you can follow the [Thingsboard installation guides](https://thingsboard.io/docs/guides/#AnchorIDInstallationGuides)
+If not, you can follow the [Thingsboard installation guides](https://thingsboard.io/docs/guides/#AnchorIDInstallationGuides).
 
 #### Eclipse Mosquitto
 
@@ -96,6 +96,7 @@ $ cd dmway
 $ chmod +x make_service.sh
 $ sudo ./make_service.sh 'dmway' '/home/pi/dmway/app.py' 'dmway.service' yes
 ```
+dmway is now waiting for receiving JSON data by MQTT.
 
 #### For deployment with Docker
 
@@ -105,7 +106,7 @@ $ sudo ./make_service.sh 'dmway' '/home/pi/dmway/app.py' 'dmway.service' yes
 
 #### Publish json_message with local MQTT broker
 
-Considering this [format](https://github.com/martindenion/dmway/wiki/JSON-message-and-topic-format), execute the following command line,  :
+Considering this [format](https://github.com/martindenion/dmway/wiki/JSON-message-and-topic-format), execute the following command line :
 
 ```
 $ mosquitto_pub -h localhost -m "json_message" -t "topic"
