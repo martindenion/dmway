@@ -61,17 +61,17 @@ dmway requires at least Python 3.5 version so you don't need to upgrade Python t
 $ sudo apt install -y python3.5 python3-pip
 ```
 
-#### Python dependancies
+### Cloning dmway
 
+Clone the dmway source code and install dmway dependancies : 
 ```
+$ git clone https://github.com/martindenion/dmway.git
 $ pip3 install -r requirements.txt
 ```
 
 ### Running dmway
-
-Clone the dmway source code and execute the app.py Python file :
+Then, you can execute the app.py Python file :
 ```
-$ git clone https://github.com/martindenion/dmway.git
 $ cd dmway
 $ python3 app.py
 Output: 
