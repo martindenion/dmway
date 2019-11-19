@@ -86,7 +86,7 @@ dmway is now waiting for receiving JSON data by MQTT.
 
 
 
-#### Publish json_message local MQTT broker
+#### Publish json_message with local MQTT broker
 
 Considering this [format](https://github.com/martindenion/dmway/wiki/JSON-message-and-topic-format), execute the following command line,  :
 ```
