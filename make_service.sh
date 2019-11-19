@@ -2,7 +2,7 @@
 
 if [ $# -ne 4 ]
 then
-echo "dmway service is enabled"
+echo "dmway service enabled and ready to be used"
 exit 1
 fi
 
