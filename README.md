@@ -1,6 +1,6 @@
 # dmway
 
-## Presentation
+## What is it ?
 
 <img src="./img/dmway2.png?raw=true" width="265" height="159">
 
@@ -34,6 +34,16 @@ First, you must have Thingsboard platform running.
 
 If not, you can follow the Thingsboard installation guides : https://thingsboard.io/docs/guides/#AnchorIDInstallationGuides
 
+#### Eclipse Mosquitto
+
+You can install a MQTT broker locally or use a MQTT broker on the cloud.
+
+These following way use a local Mosquitto broker but you can use your own MQTT broker.
+
+```
+$ sudo apt install -y mosquitto mosquitto-clients
+```
+
 #### Git tool
 
 You may also need to install the git tool for cloning the dmway project from Github :
@@ -55,16 +65,6 @@ $ sudo apt install -y python3.5 python3-pip
 
 ```
 $ pip3 install -r requirements.txt
-```
-
-#### Eclipse Mosquitto
-
-You can install a MQTT broker locally or use a MQTT broker on the cloud.
-
-These following way use a local Mosquitto broker but you can use your own MQTT broker.
-
-```
-$ sudo apt install -y mosquitto mosquitto-clients
 ```
 
 ### Running dmway
