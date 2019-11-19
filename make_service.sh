@@ -20,7 +20,7 @@ echo "[Service]"  >>$SERVICE_FILE
 if [ "$REMAIN_AFTER_EXIT" == "no" ]
 then echo "Type=simple" >>$SERVICE_FILE;
 else echo "Type=forking" >>$SERVICE_FILE; fi
-echo "ExecStart=$SCRIPT_FILE" >>$SERVICE_FILE
+echo "ExecStart=/usr/bin/python3 $SCRIPT_FILE" >>$SERVICE_FILE
 echo "TimeoutSec=0" >>$SERVICE_FILE
 echo "RemainAfterExit=$REMAIN_AFTER_EXIT" >>$SERVICE_FILE
 echo "SysVStartPriority=99" >>$SERVICE_FILE
