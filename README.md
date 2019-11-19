@@ -41,6 +41,7 @@ You can install a MQTT broker locally or use a MQTT broker on the cloud.
 These following way use a local Mosquitto broker but you can use your own MQTT broker.
 
 ```
+$ sudo apt update
 $ sudo apt install -y mosquitto mosquitto-clients
 ```
 
@@ -57,7 +58,6 @@ $ sudo apt install -y git
 dmway requires at least Python 3.5 version so you don't need to upgrade Python to a newer version : 
 
 ```
-$ sudo apt update
 $ sudo apt install -y python3.5 python3-pip
 ```
 
