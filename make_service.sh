@@ -1,12 +1,5 @@
 #!/bin/bash
 
-if [ $# -ne 4 ]
-then
-echo "dmway service enabled and ready to be used"
-else
-exit 1
-fi
-
 NAME=$1
 SCRIPT_FILE=$2
 AFTER=$3
