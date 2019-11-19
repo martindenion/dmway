@@ -97,7 +97,7 @@ $ sudo ./make_service.sh 'dmway' '/home/pi/dmway/app.py' 'dmway.service' yes
 
 #### For deployment with Docker
 
-TO DO
+*TO DO*
 
 ### Test and configuration
 
