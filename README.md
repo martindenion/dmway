@@ -84,39 +84,7 @@ dmway is now waiting for receiving JSON data by MQTT.
 
 ### Test and configuration
 
-#### Format of the message to send
 
-Your JSON message must contain at least these three fields :
-* mac
-* device
-* type
-
-It can also contain these following fields :
-* temperature
-* humidity
-* pressure
-* luminosity
-* loudness
-* gas
-* iaq
-
-Example of json_message : 
-```
-{"mac":"00:12:4b:00:18:d6:f8:9e","device":"zolertia00:12:4b:00:18:d6:f8:9e","type":"remote","ts":1483228800000,"loudness":3228,"luminosity":212,"temperature":24,"humidity":27,"pressure":9899}
-```
-#### Format of the topic
-
-To publish from your shell, you can replace '+' with what you want.  
-
-Example of topic : 
-```
-/dev/temperature/data
-```
-
-For the moment, dmway subscribes to all topics in the following format  : 
-```
-/dev/+/data
-```
 
 #### Publish json_message local MQTT broker
 
