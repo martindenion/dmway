@@ -9,6 +9,7 @@ class Verification:
         """By default, the format is wrong"""
         self.success_keys = False
         self.success_values = False
+        self.filtered_dict = {"device": "", "type": "", "values": {}}
 
     def json_to_dict(self, raw_json):
         """
@@ -137,21 +138,20 @@ class Verification:
         json_schema = v.json_schema_to_dict()
         raw_dict = self.json_to_dict(raw_json)
         splitted_topic = topic.split('/')
-        filtered_dict = {"device": "", "type": "", "values": {}}
         # for schema_topics_key, schema_topics_value in json_schema["topics"].items():
         if splitted_topic[0] in json_schema["topics"].keys():
             try:
-                filtered_dict["device"] = raw_dict[json_schema["topics"][splitted_topic[0]]["device"]]
-                filtered_dict["type"] = raw_dict[json_schema["topics"][splitted_topic[0]]["type"]]
-                print(filtered_dict)
+                self.filtered_dict["device"] = raw_dict[json_schema["topics"][splitted_topic[0]]["device"]]
+                self.filtered_dict["type"] = raw_dict[json_schema["topics"][splitted_topic[0]]["type"]]
+                print(self.filtered_dict)
                 for schema_values_key, schema_values_value in json_schema["topics"][splitted_topic[0]][
                     "values"].items():
                     if schema_values_key in raw_dict.keys():
                         for schema_type_element in \
                                 json_schema["topics"][splitted_topic[0]]["values"][schema_values_key]["type"]:
                             if isinstance(raw_dict[schema_values_key], self.mapping_types(schema_type_element)):
-                                filtered_dict["values"][schema_values_key] = raw_dict[schema_values_key]
-                                print(filtered_dict)
+                                self.filtered_dict["values"][schema_values_key] = raw_dict[schema_values_key]
+                                print(self.filtered_dict)
             except KeyError:
                 print("Error between : " + topic + " and : " + raw_json)
             except TypeError:

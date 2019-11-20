@@ -1,9 +1,5 @@
-import os
-import time
-import sys
 import paho.mqtt.client as mqtt
 import json
-from persistor.persist import *
 
 
 class Publish:

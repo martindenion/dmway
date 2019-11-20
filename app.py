@@ -1,7 +1,7 @@
-from format.format import Verification
-from persistor.persist import Database
-from publish.publish import Publish
-from subscribe.subscribe import SubThread
+from src.format import Verification
+from src.persistor import Database
+from src.publish import Publish
+from src.subscribe.subscribe import SubThread
 import var
 import sys
 import signal

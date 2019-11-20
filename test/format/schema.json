@@ -1,0 +1,110 @@
+{
+  "topics": {
+    "dev": {
+      "device": "device",
+      "type": "type",
+      "values": {
+        "mac": {
+          "type": "str",
+          "units": [
+            "None"
+          ]
+        },
+        "ts": {
+          "type": "int",
+          "units": [
+            "s"
+          ]
+        },
+        "temperature": {
+          "type": [
+            "int",
+            "float"
+          ],
+          "units": [
+            "C",
+            "F"
+          ]
+        },
+        "humidity": {
+          "type": [
+            "int",
+            "float"
+          ],
+          "units": [
+            "%"
+          ]
+        },
+        "pressure": {
+          "type": [
+            "int",
+            "float"
+          ],
+          "units": [
+            "hPa",
+            "Bar"
+          ]
+        },
+        "luminosity": {
+          "type": [
+            "int",
+            "float"
+          ],
+          "units": [
+            "Lux"
+          ]
+        },
+        "gas": {
+          "type": [
+            "int",
+            "float"
+          ],
+          "units": [
+            "Ohm"
+          ]
+        },
+        "loudness": {
+          "type": [
+            "int",
+            "float"
+          ],
+          "units": [
+            "None"
+          ]
+        },
+        "iaq": {
+          "type": [
+            "str"
+          ],
+          "units": [
+            "None"
+          ]
+        }
+      }
+    },
+    "zwave": {
+      "device": "node_id",
+      "type": "label",
+      "values": {
+        "energy": {
+          "type": [
+            "int",
+            "float"
+          ],
+          "units": [
+            "kWh"
+          ]
+        },
+        "power": {
+          "type": [
+            "int",
+            "float"
+          ],
+          "units": [
+            "W"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,7 +1,5 @@
 import sqlite3
-import json
 from sqlite3 import Error
-from format.format import *
 
 
 def number_question_marks(query):
