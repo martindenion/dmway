@@ -46,13 +46,14 @@ def main_app():
     while True:
         # Reading serial port
         raw_json = var.raw_json
+        topic = var.topic
         #raw_json = json4
         # Comparing previous and current raw JSON to not send several times the same frame
         if raw_json != "" and raw_json is not None and raw_json != raw_json_rg:
             raw_json_rg = raw_json
             raw_json_sent = verif.modify_ts(raw_json)
             # Verifying the format of the JSON frame
-            if verif.verify_keys(raw_json_sent):
+            if verif.verify_keys(topic, raw_json_sent):
                 print("Good keys")
                 if verif.verify_values(raw_json_sent):
                     print("Good values")

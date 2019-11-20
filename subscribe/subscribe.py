@@ -39,6 +39,7 @@ class SubThread(threading.Thread):
         payload = msg.payload.decode("utf-8")
         print(msg.topic + " '" + payload + "'" + str(len(payload)))
         var.raw_json = payload
+        var.topic = msg.topic.decode("utf-8")
 
     def stop_running(self):
         self.client.disconnect()
