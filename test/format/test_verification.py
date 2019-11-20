@@ -1,5 +1,6 @@
 from unittest import TestCase
 
+
 class TestVerificationZwave(TestCase):
 
     def test_init(self):
@@ -16,7 +17,7 @@ class TestVerificationZwave(TestCase):
         verif.filter_data("zwave/+/energy", raw_json)
         self.assertEqual(verif.filtered_dict, raw_dict_filtered)
 
-"""Test about JSON format"""
+    # Test about JSON format
 
     def test_zwave_wrong_topic(self):
         raw_json = '{"node_id":"zwave","label":"fibaro","energy":30,"power":30}'
@@ -26,7 +27,7 @@ class TestVerificationZwave(TestCase):
         verif.filter_data("zwav/+/energy", raw_json)
         self.assertEqual(verif.filtered_dict, raw_dict_filtered)
 
-"""Tests about type of the value corresponding to each keys in the dictionary"""
+    # Tests about type of the value corresponding to each keys in the dictionary
 
     def test_zwave_wrong_device_value_type(self):
         raw_json = '{"node_id":zwave,"label":"fibaro","energy":30,"power":30}'
