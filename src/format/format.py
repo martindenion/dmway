@@ -9,7 +9,7 @@ class Verification:
         """By default, the format is wrong"""
         self.success_keys = False
         self.success_values = False
-        self.filtered_dict = {"device": "", "type": "", "values": {}}
+        self.filtered_dict = {"device": "", "type": "", "ts": None, "values": {}}
 
     def json_to_dict(self, raw_json):
         """
@@ -121,8 +121,17 @@ class Verification:
         return self.success_values
 
     def json_schema_to_dict(self):
-        with open('schema.json') as json_schema:
-            return json.load(json_schema)
+        """
+        Methods that open the schema.json file and convert it into a Python dicitonary
+        :return: dict
+        """
+        try:
+            with open('schema.json') as json_schema:
+                return json.load(json_schema)
+        except FileNotFoundError as file_not_found:
+            print(file_not_found)
+        except json.decoder.JSONDecodeError as wrong_json_format:
+            print(wrong_json_format)
 
     def mapping_types(self, type_in_schema):
         switcher = {
@@ -132,27 +141,39 @@ class Verification:
         }
         return switcher.get(type_in_schema, int)
 
+    def set_ts(self, splitted_topic, json_schema):
+        if not ("ts" in json_schema["topics"][splitted_topic]["values"]):
+            self.filtered_dict['ts'] = int(round(time.time() * 1000))
+
     def filter_data(self, topic, raw_json):
-        v = Verification()
-        topic_flag = False
-        json_schema = v.json_schema_to_dict()
+        """
+        Method that creates a Python dictonary that follows a format depending on the topic specified in argument
+        The formats to follow are specified in schema.json file
+        :param topic:
+        :param raw_json:
+        :return:
+        """
+        json_schema = self.json_schema_to_dict()
         raw_dict = self.json_to_dict(raw_json)
         splitted_topic = topic.split('/')
         # for schema_topics_key, schema_topics_value in json_schema["topics"].items():
-        if splitted_topic[0] in json_schema["topics"].keys():
-            try:
-                self.filtered_dict["device"] = raw_dict[json_schema["topics"][splitted_topic[0]]["device"]]
-                self.filtered_dict["type"] = raw_dict[json_schema["topics"][splitted_topic[0]]["type"]]
-                print(self.filtered_dict)
-                for schema_values_key, schema_values_value in json_schema["topics"][splitted_topic[0]][
-                    "values"].items():
-                    if schema_values_key in raw_dict.keys():
-                        for schema_type_element in \
-                                json_schema["topics"][splitted_topic[0]]["values"][schema_values_key]["type"]:
-                            if isinstance(raw_dict[schema_values_key], self.mapping_types(schema_type_element)):
-                                self.filtered_dict["values"][schema_values_key] = raw_dict[schema_values_key]
-                                print(self.filtered_dict)
-            except KeyError:
-                print("Error between : " + topic + " and : " + raw_json)
-            except TypeError:
-                print("Missing fields in ", raw_json)
+        try:
+            if splitted_topic[0] in json_schema["topics"].keys():
+                try:
+                    self.filtered_dict["device"] = raw_dict[json_schema["topics"][splitted_topic[0]]["device"]]
+                    self.filtered_dict["type"] = raw_dict[json_schema["topics"][splitted_topic[0]]["type"]]
+                    self.set_ts(splitted_topic[0], json_schema)
+                    for schema_values_key, schema_values_value in json_schema["topics"][splitted_topic[0]][
+                        "values"].items():
+                        if schema_values_key in raw_dict.keys():
+                            for schema_type_element in \
+                                    json_schema["topics"][splitted_topic[0]]["values"][schema_values_key]["type"]:
+                                if isinstance(raw_dict[schema_values_key], self.mapping_types(schema_type_element)):
+                                    self.filtered_dict["values"][schema_values_key] = raw_dict[schema_values_key]
+                                    print(self.filtered_dict)
+                except KeyError:
+                    print("Error between : " + topic + " and : " + raw_json)
+                except TypeError:
+                    print("Missing fields in ", raw_json)
+        except TypeError as type_error:
+            print(type_error)
