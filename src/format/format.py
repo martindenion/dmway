@@ -5,13 +5,31 @@ import time
 class Verification:
     """This class includes the methods necessary to check the format of the data received by the various sensors"""
 
-    def __init__(self):
-        """By default, the format is wrong"""
-        self.success_keys = False
-        self.success_values = False
+    def __init__(self, topic, raw_json):
+        self.topic = topic
+        self.raw_json = raw_json
+        self.json_schema = {}
         self.filtered_dict = {"device": "", "type": "", "ts": None, "values": {}}
 
-    def json_to_dict(self, raw_json):
+    def set_json_schema_default(self, value):
+        try:
+            with open('schema.json') as json_schema:
+                self.json_schema = self.json_file_to_dict(json_schema)
+        except FileNotFoundError as file_not_found:
+            print(file_not_found)
+        except json.decoder.JSONDecodeError as wrong_json_format:
+            print(wrong_json_format)
+
+    def set_json_schema_custom(self, path):
+        try:
+            with open(path) as json_schema:
+                self.json_schema = self.json_file_to_dict(json_schema)
+        except FileNotFoundError as file_not_found:
+            print(file_not_found)
+        except json.decoder.JSONDecodeError as wrong_json_format:
+            print(wrong_json_format)
+
+    def json_string_to_dict(self, raw_json):
         """
         Method for converting a JSON message to a Python dictionary
         :param raw_json: str
@@ -19,119 +37,19 @@ class Verification:
         """
         try:
             return json.loads(raw_json)
-        except ValueError:
-            print(raw_json + " correspond to a wrong JSON format")
+        except ValueError as value_error:
+            print(value_error)
 
-    def get_value(self, raw_json, key):
+    def json_file_to_dict(self, raw_json):
         """
-        Method that returns the value of the JSON message corresponding to the key specified in the parameter
+        Method for converting a JSON message to a Python dictionary
         :param raw_json: str
-        :param key: str
-        :return: dict
-        """
-        raw_dict = self.json_to_dict(raw_json)
-        return raw_dict["{}".format(key)]
-
-    def get_keys(self, raw_json):
-        """
-        Method that returns a list of all the keys of the JSON message
-        :param raw_json: str
-        :return: dict
-        """
-        raw_dict = self.json_to_dict(raw_json)
-        keys_list = []
-        for cle in raw_dict.keys():
-            keys_list.append(cle)
-        return keys_list
-
-    def get_values(self, raw_json):
-        """
-        Method that returns a list of all the values of the JSON message
-        :param raw_json: str
-        :return: list
-        """
-        raw_dict = self.json_to_dict(raw_json)
-        values_list = []
-        for cle in raw_dict.values():
-            values_list.append(cle)
-        return values_list
-
-    def modify_ts(self, raw_json):
-        raw_dict = self.json_to_dict(raw_json)
-        raw_dict['ts'] = int(round(time.time() * 1000))
-        return json.dumps(raw_dict)
-
-    def verify_keys(self, topic, raw_json):
-        """
-        Method that checks the format of the JSON message keys
-        :param raw_json: str
-        :return: bool
-        """
-        keys_list = self.get_keys(raw_json)
-        all_keys_list = {
-            "dev": {
-                "device": "device",
-                "type": "type",
-                "values": ['mac', 'ts', 'temperature', 'humidity', 'pressure', 'luminosity', 'gas', 'loudness', 'iaq']
-            },
-            "zwave": {
-                "device": "node_id",
-                "type": "label",
-                "values": ['energy', 'power']
-            }
-        }
-        model_keys_list = []
-        if topic.slipt('/')[1] in all_keys_list.keys():
-            model_keys_list = all_keys_list[topic.slipt('/')[1]]
-
-        if model_keys_list['device'] in keys_list and model_keys_list['type'] in keys_list:
-            print('Verifying keys ...')
-            for key in keys_list:
-                print('key : {}'.format(key))
-                if key in model_keys_list:
-                    self.success_keys = True
-                else:
-                    self.success_keys = False
-                    break
-        else:
-            self.success_keys = False
-        return self.success_keys
-
-    def verify_values(self, raw_json):
-        """
-        Method that checks the format of the JSON message values
-        :param raw_json: str
-        :return: bool
-        """
-        raw_dict = self.json_to_dict(raw_json)
-        values_list = self.get_values(raw_json)
-        print('Verifying values ...')
-        for key, value in raw_dict.items():
-            print('value : {}'.format(value))
-            if (key == 'mac' or key == 'device' or key == 'type' or key == 'iaq') and (isinstance(value, str)):
-                self.success_values = True
-            elif isinstance(value, int) or isinstance(value, float) or isinstance(value, long):
-                self.success_values = True
-            elif isinstance(value, str):
-                print("{} est de type str".format(value))
-                self.success_values = False
-            else:
-                self.success_values = False
-                break
-        return self.success_values
-
-    def json_schema_to_dict(self):
-        """
-        Methods that open the schema.json file and convert it into a Python dicitonary
         :return: dict
         """
         try:
-            with open('schema.json') as json_schema:
-                return json.load(json_schema)
-        except FileNotFoundError as file_not_found:
-            print(file_not_found)
-        except json.decoder.JSONDecodeError as wrong_json_format:
-            print(wrong_json_format)
+            return json.load(raw_json)
+        except ValueError as value_error:
+            print(value_error)
 
     def mapping_types(self, type_in_schema):
         switcher = {
@@ -141,39 +59,39 @@ class Verification:
         }
         return switcher.get(type_in_schema, int)
 
-    def set_ts(self, splitted_topic, json_schema):
-        if not ("ts" in json_schema["topics"][splitted_topic]["values"]):
+    def set_ts(self, splitted_topic):
+        if not ("ts" in self.json_schema["topics"][splitted_topic]):
             self.filtered_dict['ts'] = int(round(time.time() * 1000))
+        else:
+            self.filtered_dict['ts'] = self.json_string_to_dict(self.raw_json)['ts']
 
-    def filter_data(self, topic, raw_json):
+    def filter_data(self):
         """
-        Method that creates a Python dictonary that follows a format depending on the topic specified in argument
+        Method that creates a Python dictionary that follows a format depending on the topic specified in argument
         The formats to follow are specified in schema.json file
-        :param topic:
-        :param raw_json:
         :return:
         """
-        json_schema = self.json_schema_to_dict()
-        raw_dict = self.json_to_dict(raw_json)
-        splitted_topic = topic.split('/')
+        self.set_json_schema_default(None)
+        raw_dict = self.json_string_to_dict(self.raw_json)
+        splitted_topic = self.topic.split('/')
         # for schema_topics_key, schema_topics_value in json_schema["topics"].items():
         try:
-            if splitted_topic[0] in json_schema["topics"].keys():
+            if splitted_topic[0] in self.json_schema["topics"].keys():
                 try:
-                    self.filtered_dict["device"] = raw_dict[json_schema["topics"][splitted_topic[0]]["device"]]
-                    self.filtered_dict["type"] = raw_dict[json_schema["topics"][splitted_topic[0]]["type"]]
-                    self.set_ts(splitted_topic[0], json_schema)
-                    for schema_values_key, schema_values_value in json_schema["topics"][splitted_topic[0]][
+                    self.filtered_dict["device"] = raw_dict[self.json_schema["topics"][splitted_topic[0]]["device"]]
+                    self.filtered_dict["type"] = raw_dict[self.json_schema["topics"][splitted_topic[0]]["type"]]
+                    self.set_ts(splitted_topic[0])
+                    for schema_values_key, schema_values_value in self.json_schema["topics"][splitted_topic[0]][
                         "values"].items():
                         if schema_values_key in raw_dict.keys():
                             for schema_type_element in \
-                                    json_schema["topics"][splitted_topic[0]]["values"][schema_values_key]["type"]:
+                                    self.json_schema["topics"][splitted_topic[0]]["values"][schema_values_key]["type"]:
                                 if isinstance(raw_dict[schema_values_key], self.mapping_types(schema_type_element)):
                                     self.filtered_dict["values"][schema_values_key] = raw_dict[schema_values_key]
                                     print(self.filtered_dict)
                 except KeyError:
-                    print("Error between : " + topic + " and : " + raw_json)
+                    print("Error between : " + self.topic + " and : " + self.raw_json)
                 except TypeError:
-                    print("Missing fields in ", raw_json)
+                    print("Missing fields in ", self.raw_json)
         except TypeError as type_error:
             print(type_error)

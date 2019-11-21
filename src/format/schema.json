@@ -10,12 +10,6 @@
             "None"
           ]
         },
-        "ts": {
-          "type": "int",
-          "units": [
-            "s"
-          ]
-        },
         "temperature": {
           "type": [
             "int",
@@ -84,8 +78,14 @@
     },
     "zwave": {
       "device": "node_id",
-      "type": "label",
+      "type": "class_id",
       "values": {
+        "label": [
+          "current",
+          "power",
+          "energy",
+          "voltage"
+          ],
         "energy": {
           "type": [
             "int",

@@ -2,7 +2,7 @@ from src.format import Verification
 from src.persistor import Database
 from src.publish import Publish
 from src.subscribe.subscribe import SubThread
-import var
+from src import var
 import sys
 import signal
 

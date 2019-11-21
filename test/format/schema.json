@@ -10,12 +10,6 @@
             "None"
           ]
         },
-        "ts": {
-          "type": "int",
-          "units": [
-            "s"
-          ]
-        },
         "temperature": {
           "type": [
             "int",

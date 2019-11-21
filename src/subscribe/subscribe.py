@@ -1,12 +1,8 @@
 #!/usr/bin/env python
 import threading
-import os
-import time
 #import serial
-import sys
-import json
 import paho.mqtt.client as mqtt
-import var
+from src import var
 
 
 class SubThread(threading.Thread):
