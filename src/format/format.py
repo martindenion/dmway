@@ -1,15 +1,16 @@
 import json
 import time
+import datetime
 
 
 class Verification:
     """This class includes the methods necessary to check the format of the data received by the various sensors"""
 
-    def __init__(self, topic, raw_json):
-        self.topic = topic
+    def __init__(self, raw_json):
         self.raw_json = raw_json
         self.json_schema = {}
         self.filtered_dict = {"device": "", "type": "", "ts": None, "values": {}}
+        self.standard_supported = []
 
     def set_json_schema_default(self, value):
         try:
@@ -59,11 +60,58 @@ class Verification:
         }
         return switcher.get(type_in_schema, int)
 
-    def set_ts(self, splitted_topic):
-        if not ("ts" in self.json_schema["topics"][splitted_topic]):
+    def set_ts(self, standard):
+        if not ("ts" in self.json_schema["standard"][standard]):
             self.filtered_dict['ts'] = int(round(time.time() * 1000))
         else:
             self.filtered_dict['ts'] = self.json_string_to_dict(self.raw_json)['ts']
+
+    def compare_rx_std(self):
+        """
+        Methods that compared keys in the JSON string received and keys in the different standards included in
+        schema.json. This methods adds to standard_supported list the standards supported by the JSON received
+        :return:
+        """
+        o = 0
+        try:
+            for keys, values in self.json_schema['standard'].items():
+                for key in self.json_string_to_dict(self.raw_json).keys():
+                    if key in values.keys():
+                        o += 1
+                if len(self.json_string_to_dict(self.raw_json)) == o:
+                    print("Standard corresponds to the following standard :", keys)
+                    self.standard_supported.append(keys)
+                else:
+                    print("Standard does not correspond to the following standard :", keys)
+                o = 0
+        except AttributeError as attribute_error:
+            print(attribute_error, "(wrong JSON format)")
+        except KeyError as key_error:
+            print(key_error)
+
+    def std_to_dmway(self):
+        for key, value in self.json_schema['standard'][self.standard_supported[0]].items():
+            if value == 'device':
+                self.filtered_dict['device'] = self.json_string_to_dict(self.raw_json)[key]
+            elif value == 'type':
+                self.filtered_dict['type'] = self.json_string_to_dict(self.raw_json)[key]
+            elif value == 'datetime':
+                self.filtered_dict['ts'] = int(time.mktime(datetime.datetime.strptime(self.json_string_to_dict(self.raw_json)[key], "%Y-%m-%d %H:%M:%S").timetuple()))
+            elif value == 'ts':
+                self.filtered_dict['ts'] = self.json_string_to_dict(self.raw_json)[key]
+            else:
+                self.filtered_dict['ts'] = int(round(time.time() * 1000))
+
+    def fld_to_dmway(self):
+        if self.json_schema['fields'][self.standard_supported[0]]['values'] == "":
+            for k, v in self.json_string_to_dict(self.raw_json).items():
+                if k in self.json_schema['fields'][self.standard_supported[0]]['keys']:
+                    self.filtered_dict['values'][k] = v
+        else:
+            for key, value in self.json_string_to_dict(self.raw_json).items():
+                if isinstance(value, str):
+                    if value.lower() in self.json_schema['fields'][self.standard_supported[0]]['keys']:
+                        self.filtered_dict['values'][value] = self.json_string_to_dict(self.raw_json)[self.json_schema['fields'][self.standard_supported[0]]['values']]
 
     def filter_data(self):
         """
@@ -95,3 +143,7 @@ class Verification:
                     print("Missing fields in ", self.raw_json)
         except TypeError as type_error:
             print(type_error)
+
+
+    #def display_fields(self):
+     #   for keys, values in self.json_schema["fields"][]

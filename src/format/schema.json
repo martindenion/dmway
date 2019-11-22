@@ -1,110 +1,83 @@
 {
-  "topics": {
-    "dev": {
+  "standard": {
+    "RF433": {
+      "time" : "datetime",
+      "brand" : "OS",
+      "model" : "type",
+      "id" : "device",
+      "channel" : 1,
+      "battery" : "OK",
+      "temperature_C" : 22.800,
+      "humidity" : 52,
+      "mic" : "CHECKSUM"
+    },
+    "sixlowpan": {
       "device": "device",
       "type": "type",
-      "values": {
-        "mac": {
-          "type": "str",
-          "units": [
-            "None"
-          ]
-        },
-        "temperature": {
-          "type": [
-            "int",
-            "float"
-          ],
-          "units": [
-            "C",
-            "F"
-          ]
-        },
-        "humidity": {
-          "type": [
-            "int",
-            "float"
-          ],
-          "units": [
-            "%"
-          ]
-        },
-        "pressure": {
-          "type": [
-            "int",
-            "float"
-          ],
-          "units": [
-            "hPa",
-            "Bar"
-          ]
-        },
-        "luminosity": {
-          "type": [
-            "int",
-            "float"
-          ],
-          "units": [
-            "Lux"
-          ]
-        },
-        "gas": {
-          "type": [
-            "int",
-            "float"
-          ],
-          "units": [
-            "Ohm"
-          ]
-        },
-        "loudness": {
-          "type": [
-            "int",
-            "float"
-          ],
-          "units": [
-            "None"
-          ]
-        },
-        "iaq": {
-          "type": [
-            "str"
-          ],
-          "units": [
-            "None"
-          ]
-        }
-      }
+      "mac": "",
+      "temperature": "",
+      "humidity": "",
+      "pressure": "",
+      "luminosity": "",
+      "gas": "",
+      "loudness": "",
+      "iaq": ""
     },
     "zwave": {
-      "device": "node_id",
-      "type": "class_id",
-      "values": {
-        "label": [
-          "current",
-          "power",
-          "energy",
-          "voltage"
-          ],
-        "energy": {
-          "type": [
-            "int",
-            "float"
-          ],
-          "units": [
-            "kWh"
-          ]
-        },
-        "power": {
-          "type": [
-            "int",
-            "float"
-          ],
-          "units": [
-            "W"
-          ]
-        }
-      }
+      "value_id": "",
+      "node_id": "device",
+      "class_id": "type",
+      "type": "",
+      "genre": "",
+      "instance": "",
+      "index": "",
+      "label": [
+        "current",
+        "power",
+        "energy",
+        "voltage",
+        "temperature"
+      ],
+      "units": "label.units",
+      "help": "",
+      "read_only": "",
+      "write_only": "",
+      "min": "",
+      "max": "",
+      "is_polled": "",
+      "value": "value"
+    }
+  },
+  "fields": {
+    "RF433" : {
+      "keys" : [
+        "channel",
+        "battery",
+        "temperature_C",
+        "humidity"
+      ],
+      "values": ""
+    },
+    "sixlowpan": {
+      "keys" : [
+        "temperature",
+        "humidity",
+        "luminosity",
+        "pressure",
+        "gas",
+        "loudness",
+        "iaq"
+      ],
+      "values": ""
+    },
+    "zwave": {
+      "keys" : [
+        "current",
+        "power",
+        "energy",
+        "voltage"
+      ],
+      "values": "value"
     }
   }
 }
