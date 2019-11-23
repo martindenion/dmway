@@ -9,10 +9,11 @@ class Verification:
     def __init__(self, raw_json):
         self.raw_json = raw_json
         self.json_schema = {}
-        self.filtered_dict = {"device": "", "type": "", "ts": None, "values": {}}
+        self.filtered_dict = {}
         self.standard_supported = []
+        self.value_to_send = False
 
-    def set_json_schema_default(self, value):
+    def set_json_schema_default(self):
         try:
             with open('schema.json') as json_schema:
                 self.json_schema = self.json_file_to_dict(json_schema)
@@ -86,64 +87,46 @@ class Verification:
                 o = 0
         except AttributeError as attribute_error:
             print(attribute_error, "(wrong JSON format)")
-        except KeyError as key_error:
-            print(key_error)
+        except KeyError:
+            print('ERROR : First initialize schema.json as default schema')
 
-    def std_to_dmway(self):
-        for key, value in self.json_schema['standard'][self.standard_supported[0]].items():
-            if value == 'device':
-                self.filtered_dict['device'] = self.json_string_to_dict(self.raw_json)[key]
-            elif value == 'type':
-                self.filtered_dict['type'] = self.json_string_to_dict(self.raw_json)[key]
-            elif value == 'datetime':
-                self.filtered_dict['ts'] = int(time.mktime(datetime.datetime.strptime(self.json_string_to_dict(self.raw_json)[key], "%Y-%m-%d %H:%M:%S").timetuple()))
-            elif value == 'ts':
-                self.filtered_dict['ts'] = self.json_string_to_dict(self.raw_json)[key]
-            else:
-                self.filtered_dict['ts'] = int(round(time.time() * 1000))
-
-    def fld_to_dmway(self):
-        if self.json_schema['fields'][self.standard_supported[0]]['values'] == "":
-            for k, v in self.json_string_to_dict(self.raw_json).items():
-                if k in self.json_schema['fields'][self.standard_supported[0]]['keys']:
-                    self.filtered_dict['values'][k] = v
-        else:
-            for key, value in self.json_string_to_dict(self.raw_json).items():
-                if isinstance(value, str):
-                    if value.lower() in self.json_schema['fields'][self.standard_supported[0]]['keys']:
-                        self.filtered_dict['values'][value] = self.json_string_to_dict(self.raw_json)[self.json_schema['fields'][self.standard_supported[0]]['values']]
-
-    def filter_data(self):
-        """
-        Method that creates a Python dictionary that follows a format depending on the topic specified in argument
-        The formats to follow are specified in schema.json file
-        :return:
-        """
-        self.set_json_schema_default(None)
-        raw_dict = self.json_string_to_dict(self.raw_json)
-        splitted_topic = self.topic.split('/')
-        # for schema_topics_key, schema_topics_value in json_schema["topics"].items():
+    def rx_to_dmway(self):
         try:
-            if splitted_topic[0] in self.json_schema["topics"].keys():
-                try:
-                    self.filtered_dict["device"] = raw_dict[self.json_schema["topics"][splitted_topic[0]]["device"]]
-                    self.filtered_dict["type"] = raw_dict[self.json_schema["topics"][splitted_topic[0]]["type"]]
-                    self.set_ts(splitted_topic[0])
-                    for schema_values_key, schema_values_value in self.json_schema["topics"][splitted_topic[0]][
-                        "values"].items():
-                        if schema_values_key in raw_dict.keys():
-                            for schema_type_element in \
-                                    self.json_schema["topics"][splitted_topic[0]]["values"][schema_values_key]["type"]:
-                                if isinstance(raw_dict[schema_values_key], self.mapping_types(schema_type_element)):
-                                    self.filtered_dict["values"][schema_values_key] = raw_dict[schema_values_key]
-                                    print(self.filtered_dict)
-                except KeyError:
-                    print("Error between : " + self.topic + " and : " + self.raw_json)
-                except TypeError:
-                    print("Missing fields in ", self.raw_json)
-        except TypeError as type_error:
-            print(type_error)
+            if self.value_to_send:
+                self.filtered_dict = {"device": self.standard_supported[0] + 'defaultname', "type": self.standard_supported[0] + 'defaulttype', "ts": None, "values": {}}
+                for key, value in self.json_schema['standard'][self.standard_supported[0]].items():
+                    if value == 'device':
+                        self.filtered_dict['device'] = self.standard_supported[0] + '_' + str(self.json_string_to_dict(self.raw_json)[key])
+                    elif value == 'type':
+                        self.filtered_dict['type'] = self.json_string_to_dict(self.raw_json)[key]
+                    elif value == 'datetime':
+                        self.filtered_dict['ts'] = int(time.mktime(datetime.datetime.strptime(self.json_string_to_dict(self.raw_json)[key], "%Y-%m-%d %H:%M:%S").timetuple()))
+                    elif value == 'ts':
+                        self.filtered_dict['ts'] = self.json_string_to_dict(self.raw_json)[key]
+                    else:
+                        self.filtered_dict['ts'] = int(round(time.time() * 1000))
+                if self.json_schema['fields'][self.standard_supported[0]]['values'] == "":
+                    for k, v in self.json_string_to_dict(self.raw_json).items():
+                        if k in self.json_schema['fields'][self.standard_supported[0]]['keys']:
+                            self.filtered_dict['values'][k] = v
+                else:
+                    for key, value in self.json_string_to_dict(self.raw_json).items():
+                        if isinstance(value, str):
+                            if value in self.json_schema['fields'][self.standard_supported[0]]['keys']:
+                                self.filtered_dict['values'][value] = self.json_string_to_dict(self.raw_json)[
+                                    self.json_schema['fields'][self.standard_supported[0]]['values']]
+        except KeyError as key_error:
+            print('ERROR : no', key_error, 'field in what dmway received')
+            self.filtered_dict = {}
 
+    def check_value_to_send(self):
+        try:
+            for k, v in self.json_string_to_dict(self.raw_json).items():
+                if isinstance(k, str) or isinstance(v, str):
+                    if (k in self.json_schema['fields'][self.standard_supported[0]]['keys']) or (v in self.json_schema['fields'][self.standard_supported[0]]['keys']):
+                        self.value_to_send = True
+        except AttributeError as attribute_error:
+            print(attribute_error)
+        except IndexError as index_error:
+            print("ERROR :", index_error)
 
-    #def display_fields(self):
-     #   for keys, values in self.json_schema["fields"][]

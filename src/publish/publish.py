@@ -1,6 +1,8 @@
 import paho.mqtt.client as mqtt
 import json
 
+from src.format.format import Verification
+
 
 class Publish:
     """This class includes the methods necessary to send data to Thingsboard while respecting its API"""

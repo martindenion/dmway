@@ -24,8 +24,8 @@
       "iaq": ""
     },
     "zwave": {
-      "value_id": "",
-      "node_id": "device",
+      "value_id": "device",
+      "node_id": "",
       "class_id": "type",
       "type": "",
       "genre": "",
@@ -72,10 +72,10 @@
     },
     "zwave": {
       "keys" : [
-        "current",
-        "power",
-        "energy",
-        "voltage"
+        "Current",
+        "Power",
+        "Energy",
+        "Voltage"
       ],
       "values": "value"
     }
