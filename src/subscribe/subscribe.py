@@ -1,33 +1,21 @@
-#!/usr/bin/env python
+import json
 import threading
-#import serial
 import paho.mqtt.client as mqtt
 from src import var
 
 
 class SubThread(threading.Thread):
-    def __init__(self):
+    def __init__(self, ip, topic):
         threading.Thread.__init__(self)
-        self.raw_json = '{"addr":"uneaddr","device":"fstcapteur","type":"capteur","ts":1483228800000,"temperature":30,' \
-                        '"humidity":50,"pressure":1015,"luminosity":10000,"sound":55}'
-        # self.interval = 10
-        # self.next_reading = time.time()
-        # self.ser = serial.Serial(
-        #    port='/dev/ttyUSB0',
-        #    baudrate=115200,
-        #    parity=serial.PARITY_NONE,
-        #    stopbits=serial.STOPBITS_ONE,
-        #    bytesize=serial.EIGHTBITS,
-        #    timeout=1
-        #)
-        self.broker_address = "localhost"
+        self.ip = ip
+        self.topic = topic
         self.client = None
 
     def on_connect(self, client, userdata, flags, rc):
         print("Connected with result code " + str(rc))
         # Subscribing in on_connect() means that if we lose the connection and
         # reconnect then subscriptions will be renewed.
-        client.subscribe("/dev/+/data")
+        client.subscribe(self.topic)
 
         # The callback for when a PUBLISH message is received from the server.
 
@@ -45,12 +33,10 @@ class SubThread(threading.Thread):
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
 
-        self.client.connect(self.broker_address, 1883, 60)
+        self.client.connect(self.ip, 1883, 60)
 
         self.client.loop_forever()
         # Blocking call that processes network traffic, dispatches callbacks and
         # handles reconnecting.
         # Other loop*() functions are available that give a threaded interface and a
         # manual interface.
-
-
