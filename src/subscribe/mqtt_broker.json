@@ -1,0 +1,17 @@
+{
+  "mqtt_broker":
+  {
+    "sixlowpan": {
+      "ip": "localhost",
+      "topic": "/dev/+/data"
+    },
+    "zwave": {
+      "ip": "10.16.1.124",
+      "topic": "dev/labo/#"
+    },
+    "rf433": {
+      "ip": "10.x.x.x",
+      "topic": "#"
+    }
+  }
+}
