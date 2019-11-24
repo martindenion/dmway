@@ -2,6 +2,7 @@ import json
 import threading
 import paho.mqtt.client as mqtt
 from src import var
+from src.format.format_thread import FormatThread
 
 
 class SubThread(threading.Thread):
@@ -22,8 +23,7 @@ class SubThread(threading.Thread):
     def on_message(self, client, userdata, msg):
         payload = msg.payload.decode("utf-8")
         print(msg.topic + " '" + payload + "'" + str(len(payload)))
-        var.raw_json = payload
-        var.topic = msg.topic.decode("utf-8")
+        FormatThread(payload)
 
     def stop_running(self):
         self.client.disconnect()

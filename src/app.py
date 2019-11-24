@@ -2,7 +2,6 @@ from src.format import Verification
 from src.persistor import Database
 from src.publish import Publish
 from src.subscribe.subscribe import SubThread
-from src import var
 import sys
 import signal
 
@@ -41,12 +40,8 @@ def main_app():
     flag_for_pub = False
     raw_json_rg = ""
     nb_devices = 0
-    var.init()
     sub.start()
     while True:
-        # Reading serial port
-        raw_json = var.raw_json
-        topic = var.topic
         #raw_json = json4
         # Comparing previous and current raw JSON to not send several times the same frame
         if raw_json != "" and raw_json is not None and raw_json != raw_json_rg:
