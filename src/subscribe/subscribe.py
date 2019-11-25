@@ -36,7 +36,7 @@ class SubThread(threading.Thread):
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
 
-        self.client.connect(self.ip, 1883, 60)
+        self.client.connect(self.ip, 1883, keepalive=120)
 
         self.client.loop_forever()
         # Blocking call that processes network traffic, dispatches callbacks and

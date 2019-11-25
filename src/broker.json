@@ -2,7 +2,7 @@
   "mqtt":
   {
     "sixlowpan": {
-      "ip": "localhost",
+      "ip": "10.16.1.225",
       "topic": "/dev/+/data"
     },
     "zwave": {

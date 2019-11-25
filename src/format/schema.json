@@ -15,6 +15,7 @@
       "device": "device",
       "type": "type",
       "mac": "",
+      "ts": "",
       "temperature": "",
       "humidity": "",
       "pressure": "",
