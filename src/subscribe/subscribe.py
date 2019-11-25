@@ -1,8 +1,9 @@
 import json
 import threading
 import paho.mqtt.client as mqtt
-from src import var
-from src.format.format_thread import FormatThread
+from src.format.format import Verification
+
+from src.format.format import Verification
 
 
 class SubThread(threading.Thread):
@@ -23,7 +24,9 @@ class SubThread(threading.Thread):
     def on_message(self, client, userdata, msg):
         payload = msg.payload.decode("utf-8")
         print(msg.topic + " '" + payload + "'" + str(len(payload)))
-        FormatThread(payload)
+        v = Verification(payload)
+        v.start()
+        v.join()
 
     def stop_running(self):
         self.client.disconnect()

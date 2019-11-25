@@ -1,12 +1,16 @@
 import json
 import time
 import datetime
+import threading
+
+from src.publish.manage_pub_thread import ManagPubThread
 
 
-class Verification:
+class Verification(threading.Thread):
     """This class includes the methods necessary to check the format of the data received by the various sensors"""
 
     def __init__(self, raw_json):
+        threading.Thread.__init__(self)
         self.raw_json = raw_json
         self.json_schema = {}
         self.filtered_dict = {}
@@ -15,7 +19,7 @@ class Verification:
 
     def set_json_schema_default(self):
         try:
-            with open('schema.json') as json_schema:
+            with open('C:/Users/Martin/PycharmProjects/mdgateway/src/format/schema.json') as json_schema:
                 self.json_schema = self.json_file_to_dict(json_schema)
         except FileNotFoundError as file_not_found:
             print(file_not_found)
@@ -121,12 +125,22 @@ class Verification:
 
     def check_value_to_send(self):
         try:
-            for k, v in self.json_string_to_dict(self.raw_json).items():
-                if isinstance(k, str) or isinstance(v, str):
-                    if (k in self.json_schema['fields'][self.standard_supported[0]]['keys']) or (v in self.json_schema['fields'][self.standard_supported[0]]['keys']):
-                        self.value_to_send = True
+            if len(self.standard_supported) != 0:
+                for k, v in self.json_string_to_dict(self.raw_json).items():
+                    if isinstance(k, str) or isinstance(v, str):
+                        if (k in self.json_schema['fields'][self.standard_supported[0]]['keys']) or (v in self.json_schema['fields'][self.standard_supported[0]]['keys']):
+                            self.value_to_send = True
         except AttributeError as attribute_error:
             print(attribute_error)
         except IndexError as index_error:
             print("ERROR :", index_error)
 
+    def run(self):
+        v = Verification(self.raw_json)
+        v.set_json_schema_default()
+        v.compare_rx_std()
+        v.check_value_to_send()
+        v.rx_to_dmway()
+        m = ManagPubThread(v.filtered_dict)
+        m.start()
+        m.join()
