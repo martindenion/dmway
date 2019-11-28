@@ -3,7 +3,6 @@ import threading
 
 from src.subscribe.subscribe import SubThread
 
-
 class ManagSubThread:
     def __init__(self):
         self.broker = {}
