@@ -8,11 +8,12 @@ from src.format.format import Verification
 
 
 class SubThread(threading.Thread):
-    def __init__(self, ip, topic):
+    def __init__(self, ip, topic, p):
         threading.Thread.__init__(self)
         self.ip = ip
         self.topic = topic
         self.client = None
+        self.__p = p
 
     def on_connect(self, client, userdata, flags, rc):
         logging.info("Connected with result code " + str(rc) + " to a MQTT broker using this IP address : " + str(self.ip) + " and subscribing to this topic : " + str(self.topic))
@@ -25,7 +26,7 @@ class SubThread(threading.Thread):
     def on_message(self, client, userdata, msg):
         payload = msg.payload.decode("utf-8")
         #logging.info(str(msg.topic) + " '" + str(payload) + "'" + str(len(payload)))
-        v = Verification(payload)
+        v = Verification(payload, self.__p)
         v.start()
 
     def stop_running(self):

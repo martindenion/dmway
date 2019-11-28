@@ -10,17 +10,18 @@ from src.publish.manage_pub_thread import ManagPubThread
 class Verification(threading.Thread):
     """This class includes the methods necessary to check the format of the data received by the various sensors"""
 
-    def __init__(self, raw_json):
+    def __init__(self, raw_json, p):
         threading.Thread.__init__(self)
         self.raw_json = raw_json
         self.json_schema = {}
         self.filtered_dict = {}
         self.standard_supported = []
         self.value_to_send = False
+        self.__p = p
 
     def set_json_schema_default(self):
         try:
-            with open('C:/Users/Martin/PycharmProjects/mdgateway/src/format/schema.json') as json_schema:
+            with open(self.__p.file_dict["schema.json"]) as json_schema:
                 self.json_schema = self.json_file_to_dict(json_schema)
         except FileNotFoundError as file_not_found:
             logging.error(file_not_found)
@@ -137,7 +138,7 @@ class Verification(threading.Thread):
             logging.error("ERROR :", index_error)
 
     def run(self):
-        v = Verification(self.raw_json)
+        v = Verification(self.raw_json, self.__p)
         v.set_json_schema_default()
         v.compare_rx_std()
         v.check_value_to_send()
