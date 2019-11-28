@@ -1,5 +1,7 @@
 # dmway
 
+## What is it ?
+
 <img src="./img/dmway2.png?raw=true" width="265" height="159">
 
 d for dynamic, m for mapping and way from gateway.
@@ -16,6 +18,8 @@ This approach is a direct alternative to Thingsboard Gateway, offering a more ge
 Here is how dmway fits into our network architecture :
 
 <img src="./img/Zolertia-DMWAY-Thingsboard.jpg?raw=true">
+
+If you want a lower-level view to understand how dmway works, a [flowchart](https://github.com/martindenion/dmway/wiki/dmway-flowchart) is available.
 
 ## Getting started
 
@@ -90,7 +94,7 @@ dmway is now waiting for receiving JSON data by MQTT.
 ```
 $ cd dmway
 $ chmod +x make_service.sh
-$ sudo ./make_service.sh 'dmway' '/home/pi/dmway/src/app.py' 'dmway.service' yes
+$ sudo ./make_service.sh 'dmway' '/home/pi/dmway/app.py' 'dmway.service' yes
 Output :
 Created symlink /etc/systemd/system/multi-user.target.wants/dmway.service → /etc/systemd/system/dmway.service.
 $ sudo reboot 
@@ -120,9 +124,3 @@ In order to better understand what does this command in the dmway context, see t
 * https://thingsboard.io/docs/iot-gateway/what-is-iot-gateway/
 * https://www.startupbootcamp.org/startups/zolertia/
 * https://obrienlabs.net/how-to-setup-your-own-mqtt-broker/
-
-
-# Sources
-
-https://thingsboard.io/docs/iot-gateway/what-is-iot-gateway/
-https://www.startupbootcamp.org/startups/zolertia/
