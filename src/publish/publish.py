@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 import json
 import threading
+import logging
 
 
 class PubThread(threading.Thread):
@@ -20,7 +21,7 @@ class PubThread(threading.Thread):
 
     def on_connect(self, client, userdata, flags, rc):
         if rc == 0:
-            print("connected OK returned code", rc)
+            logging.info("connected with result code " + str(rc) + " to Thingsboard")
             self.client.loop_start()
             try:
                 self.client.publish(self.topic_connect, self.raw_connect, qos=1)
@@ -34,6 +35,7 @@ class PubThread(threading.Thread):
 
     def on_publish(self, client, obj, mid):
         print("mid: " + str(mid))
+        print("bonjouuuur")
 
     def on_disconnect(client, userdata, rc):
         print("disconnecting reason  " + str(rc))
@@ -42,8 +44,6 @@ class PubThread(threading.Thread):
         self.client = mqtt.Client()
         self.client.on_connect = self.on_connect
         self.client.on_publish = self.on_publish
-        print(self.raw_connect)
-        print(self.raw_telemetry)
         self.client.username_pw_set(self.gtw_access_token)
         self.client.connect(self.thingsboard_host, port=1883, keepalive=60)
 

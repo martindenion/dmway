@@ -2,6 +2,7 @@ import json
 import time
 import datetime
 import threading
+import logging
 
 from src.publish.manage_pub_thread import ManagPubThread
 
@@ -22,18 +23,18 @@ class Verification(threading.Thread):
             with open('C:/Users/Martin/PycharmProjects/mdgateway/src/format/schema.json') as json_schema:
                 self.json_schema = self.json_file_to_dict(json_schema)
         except FileNotFoundError as file_not_found:
-            print(file_not_found)
+            logging.error(file_not_found)
         except json.decoder.JSONDecodeError as wrong_json_format:
-            print(wrong_json_format)
+            logging.error(wrong_json_format)
 
     def set_json_schema_custom(self, path):
         try:
             with open(path) as json_schema:
                 self.json_schema = self.json_file_to_dict(json_schema)
         except FileNotFoundError as file_not_found:
-            print(file_not_found)
+            logging.error(file_not_found)
         except json.decoder.JSONDecodeError as wrong_json_format:
-            print(wrong_json_format)
+            logging.error(wrong_json_format)
 
     def json_string_to_dict(self, raw_json):
         """
@@ -44,7 +45,7 @@ class Verification(threading.Thread):
         try:
             return json.loads(raw_json)
         except ValueError as value_error:
-            print(value_error)
+            logging.error(value_error)
 
     def json_file_to_dict(self, raw_json):
         """
@@ -55,7 +56,7 @@ class Verification(threading.Thread):
         try:
             return json.load(raw_json)
         except ValueError as value_error:
-            print(value_error)
+            logging.error(value_error)
 
     def mapping_types(self, type_in_schema):
         switcher = {
@@ -84,19 +85,18 @@ class Verification(threading.Thread):
                     if key in values.keys():
                         o += 1
                 if len(self.json_string_to_dict(self.raw_json)) == o:
-                    print("Standard corresponds to the following standard :", keys)
+                    logging.debug("Received message corresponds to the following standard :" + str(keys))
                     self.standard_supported.append(keys)
-                else:
-                    print("Standard does not correspond to the following standard :", keys)
                 o = 0
         except AttributeError as attribute_error:
-            print(attribute_error, "(wrong JSON format)")
+            logging.error(attribute_error, "(wrong JSON format)")
         except KeyError:
-            print('ERROR : First initialize schema.json as default schema')
+            logging.error('ERROR : First initialize schema.json as default schema')
 
     def rx_to_dmway(self):
         try:
             if self.value_to_send:
+                logging.info("JSON message with good values have been received :" + str(self.raw_json))
                 self.filtered_dict = {"device": self.standard_supported[0] + 'defaultname', "type": self.standard_supported[0] + 'defaulttype', "ts": None, "values": {}}
                 for key, value in self.json_schema['standard'][self.standard_supported[0]].items():
                     if value == 'device':
@@ -119,8 +119,9 @@ class Verification(threading.Thread):
                             if value in self.json_schema['fields'][self.standard_supported[0]]['keys']:
                                 self.filtered_dict['values'][value] = self.json_string_to_dict(self.raw_json)[
                                     self.json_schema['fields'][self.standard_supported[0]]['values']]
+                logging.info("JSON message received have been formatted to this format : " + str(self.filtered_dict))
         except KeyError as key_error:
-            print('ERROR : no', key_error, 'field in what dmway received')
+            logging.error('ERROR : no', key_error, 'field in what dmway received')
             self.filtered_dict = {}
 
     def check_value_to_send(self):
@@ -131,9 +132,9 @@ class Verification(threading.Thread):
                         if (k in self.json_schema['fields'][self.standard_supported[0]]['keys']) or (v in self.json_schema['fields'][self.standard_supported[0]]['keys']):
                             self.value_to_send = True
         except AttributeError as attribute_error:
-            print(attribute_error)
+            logging.error(attribute_error)
         except IndexError as index_error:
-            print("ERROR :", index_error)
+            logging.error("ERROR :", index_error)
 
     def run(self):
         v = Verification(self.raw_json)
@@ -143,4 +144,3 @@ class Verification(threading.Thread):
         v.rx_to_dmway()
         m = ManagPubThread(v.filtered_dict)
         m.start()
-        m.join()

@@ -1,14 +1,14 @@
 from time import sleep, time
 
-from src.format.format import Verification
-from src.publish.manage_pub_thread import ManagPubThread
-from src.publish.publish import PubThread
-from src.subscribe.manag_sub_thread import ManagSubThread
-from src.subscribe.subscribe import SubThread
+
 import sys
 import signal
+import logging
+
+from src.subscribe.manag_sub_thread import ManagSubThread
 
 sub = None
+
 
 def running_handler(signum, frame):
     global sub
@@ -20,13 +20,16 @@ def running_handler(signum, frame):
         pass
     sys.exit(0)
 
+
 def main_app():
     global sub
     signal.signal(signal.SIGINT, running_handler)
     m = ManagSubThread()
     m.start()
-    m.join()
-
+    logging.basicConfig(filename="dmway.log", level=logging.INFO, format='%(asctime)s : %(levelname)s : %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+    logging.info("DMWAY service is started and ready to be used")
+    while True:
+        sleep(10)
 
 
 if __name__ == '__main__':

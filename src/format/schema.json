@@ -25,8 +25,8 @@
       "iaq": ""
     },
     "zwave": {
-      "value_id": "device",
-      "node_id": "",
+      "value_id": "",
+      "node_id": "device",
       "class_id": "type",
       "type": "",
       "genre": "",

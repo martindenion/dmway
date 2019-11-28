@@ -4,9 +4,8 @@ import threading
 from src.subscribe.subscribe import SubThread
 
 
-class ManagSubThread(threading.Thread):
+class ManagSubThread:
     def __init__(self):
-        threading.Thread.__init__(self)
         self.broker = {}
         self.threads_list = []
 
@@ -28,11 +27,12 @@ class ManagSubThread(threading.Thread):
         for t in self.threads_list:
             t.start()
 
-    def run(self):
+    def start(self):
         self.set_json_broker_default()
-        print(self.broker)
         self.create_sub_threads()
         self.start_threads()
+
+
 
 
 
