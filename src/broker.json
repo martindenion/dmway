@@ -1,0 +1,13 @@
+{
+  "mqtt":
+  {
+    "sixlowpan": {
+      "ip": "10.16.1.225",
+      "topic": "/dev/+/data"
+    },
+    "zwave": {
+      "ip": "10.16.1.124",
+      "topic": "dev/#"
+    }
+  }
+}
