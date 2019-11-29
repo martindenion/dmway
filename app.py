@@ -1,6 +1,5 @@
-from time import sleep, time
+from time import sleep
 
-import os
 import sys
 import signal
 import logging
@@ -17,7 +16,6 @@ def running_handler(signum, frame):
         print("Cleaning process")
         m.stop_running()
         m.join()
-
     except:
         pass
     sys.exit(0)
@@ -30,10 +28,12 @@ def main_app():
     global m
     m = ManagSubThread(p)
     m.start()
-    logging.basicConfig(filename="dmway.log", level=logging.INFO, format='%(asctime)s : %(levelname)s : %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+    logging.basicConfig(filename="dmway.log", level=logging.INFO, format='%(asctime)s : %(levelname)s : %(message)s',
+                        datefmt='%d-%b-%y %H:%M:%S')
     logging.info("DMWAY service is started and ready to be used")
     while True:
         sleep(10)
+
 
 if __name__ == '__main__':
     main_app()
