@@ -1,5 +1,4 @@
 import json
-import signal
 import threading
 import paho.mqtt.client as mqtt
 from src.format.format import Verification
@@ -32,7 +31,6 @@ class SubThread(threading.Thread):
 
     def stop_running(self):
         self.client.disconnect()
-        self.join()
 
     def run(self):
         self.client = mqtt.Client()
@@ -40,8 +38,6 @@ class SubThread(threading.Thread):
         self.client.on_message = self.on_message
 
         self.client.connect(self.ip, 1883, keepalive=120)
-
-        signal.signal(signal.SIGINT, self.stop_running())
 
         self.client.loop_forever()
         # Blocking call that processes network traffic, dispatches callbacks and
