@@ -82,10 +82,6 @@ Then, you can execute the app.py Python file :
 ```
 $ cd dmway
 $ python3 app.py
-Output: 
-Connecting to SQLite database ...
-Connected to SQLite database 2.6.0
-Connected with result code 0
 ```
 dmway is now waiting for receiving JSON data by MQTT.
 
