@@ -8,6 +8,10 @@
     "zwave": {
       "ip": "10.16.1.124",
       "topic": "dev/#"
+    },
+    "test": {
+      "ip": "test.mosquitto.org",
+      "topic": "#"
     }
   }
 }

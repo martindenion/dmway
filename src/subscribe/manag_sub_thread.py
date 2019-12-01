@@ -1,7 +1,9 @@
 import json
+import sys
 import threading
 
 from src.subscribe.subscribe import SubThread
+
 
 class ManagSubThread:
     def __init__(self, p):
@@ -27,12 +29,17 @@ class ManagSubThread:
         for t in self.threads_list:
             t.start()
 
+    def signal_handler(self, sig, frame):
+        try:
+            print("Cleaning process")
+            for t in self.threads_list:
+                t.client.stop_running()
+                t.join()
+        except:
+            pass
+        sys.exit(0)
+
     def start(self):
         self.set_json_broker_default()
         self.create_sub_threads()
         self.start_threads()
-
-
-
-
-

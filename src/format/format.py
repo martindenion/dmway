@@ -93,6 +93,8 @@ class Verification(threading.Thread):
             logging.error(attribute_error, "(wrong JSON format)")
         except KeyError:
             logging.error('ERROR : First initialize schema.json as default schema')
+        except TypeError as type_error:
+            logging.error(type_error)
 
     def rx_to_dmway(self):
         try:
